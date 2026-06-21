@@ -142,6 +142,9 @@
       "accordion": "Accordion",
       "accordion_heading": "Heading",
       "accordion_content": "Content"
+    },
+    "cart": {
+      "name": "Cart"
     }
   }
 }

@@ -44,9 +44,18 @@
   },
   "cart": {
     "checkout": "Checkout",
-    "title": "Cart",
+    "title": "Your Bag",
     "update": "Update",
-    "remove": "Remove"
+    "remove": "Remove",
+    "empty": "Your bag is currently empty.",
+    "continue_shopping": "Continue Shopping",
+    "summary": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "shipping_calculated": "Calculated at checkout",
+    "total": "Total",
+    "adding": "Adding...",
+    "added": "Added to Bag"
   },
   "customers": {
     "login": {

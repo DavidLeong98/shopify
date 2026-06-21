@@ -1,0 +1,63 @@
+{% doc %}
+Handles AJAX add-to-cart, cart count updates, and cart notification.
+Included in the layout for global availability.
+@example
+{% render 'cart-script' %}
+{% enddoc %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('form[action*="/cart/add"]').forEach(function(form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(form);
+        var submitBtn = form.querySelector('[type="submit"]');
+        var originalText = submitBtn.textContent;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '{{ "cart.adding" | t }}';
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(function(response) { return response.json(); })
+        .then(function() {
+          submitBtn.textContent = '{{ "cart.added" | t }}';
+          updateCartCount();
+          setTimeout(function() {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          }, 2000);
+        })
+        .catch(function() {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        });
+      });
+    });
+
+    function updateCartCount() {
+      fetch('/cart.js')
+        .then(function(response) { return response.json(); })
+        .then(function(cart) {
+          var badge = document.querySelector('.header__cart-count');
+          if (cart.item_count > 0) {
+            if (badge) {
+              badge.textContent = cart.item_count;
+            } else {
+              var cartLink = document.querySelector('.header__cart');
+              if (cartLink) {
+                var newBadge = document.createElement('span');
+                newBadge.className = 'header__cart-count';
+                newBadge.textContent = cart.item_count;
+                cartLink.appendChild(newBadge);
+              }
+            }
+          } else if (badge) {
+            badge.remove();
+          }
+        });
+    }
+  });
+</script>
