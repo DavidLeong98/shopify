@@ -1,0 +1,206 @@
+<section class="consultation section-gap">
+  <div class="consultation__inner container">
+    <div class="consultation__grid">
+      <div class="consultation__media">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 800 | image_tag: class: 'consultation__image', loading: 'lazy' }}
+        {% endif %}
+        {% if section.settings.stat_number != blank %}
+          <div class="consultation__stat">
+            <span class="display-lg">{{ section.settings.stat_number }}</span>
+            <p class="label-sm">{{ section.settings.stat_label }}</p>
+          </div>
+        {% endif %}
+      </div>
+      <div class="consultation__content">
+        {% if section.settings.eyebrow != blank %}
+          <span class="label-sm" style="color: var(--color-primary); display: block; margin-bottom: 16px; letter-spacing: 0.15em;">{{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2 class="display-lg" style="margin-bottom: 32px;">{{ section.settings.heading }}</h2>
+        <p class="body-lg" style="color: var(--color-on-surface-variant); margin-bottom: 40px; line-height: 1.7;">{{ section.settings.description }}</p>
+        <div class="consultation__features">
+          {% for block in section.blocks %}
+            <div class="consultation__feature" {{ block.shopify_attributes }}>
+              {% if block.settings.icon == 'auto_awesome' %}
+                <svg class="consultation__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/></svg>
+              {% else %}
+                <svg class="consultation__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {% endif %}
+              <div>
+                <h4 class="label-sm" style="margin-bottom: 4px;">{{ block.settings.title }}</h4>
+                <p style="color: var(--color-on-surface-variant); font-size: 14px;">{{ block.settings.description }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="btn-primary" style="margin-top: 48px;">
+            {{ section.settings.button_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .consultation__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .consultation__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .consultation__media {
+    position: relative;
+  }
+  .consultation__image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+  }
+  .consultation__stat {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    background-color: var(--color-tertiary-container);
+    padding: 32px;
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .consultation__stat { display: block; }
+  }
+  .consultation__stat .display-lg {
+    color: var(--color-on-tertiary-container);
+  }
+  .consultation__stat .label-sm {
+    color: var(--color-on-tertiary-container);
+    margin-top: 4px;
+  }
+  .consultation__features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .consultation__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .consultation__feature-icon {
+    color: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.consultation.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.consultation.image"
+    },
+    {
+      "type": "text",
+      "id": "stat_number",
+      "label": "t:sections.consultation.stat_number",
+      "default": "8+"
+    },
+    {
+      "type": "text",
+      "id": "stat_label",
+      "label": "t:sections.consultation.stat_label",
+      "default": "Years of Research"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.consultation.eyebrow",
+      "default": "Personalized Guidance"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.consultation.heading",
+      "default": "Your Skin, Mastered."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:sections.consultation.description",
+      "default": "Our specialists provide complimentary digital consultations to design a bespoke ritual tailored to your skin's unique needs."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.consultation.button_label",
+      "default": "Start Consultation"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.consultation.button_link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "t:sections.consultation.feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:sections.consultation.icon",
+          "options": [
+            { "value": "auto_awesome", "label": "Star" },
+            { "value": "support_agent", "label": "Person" }
+          ],
+          "default": "auto_awesome"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.consultation.feature_title",
+          "default": "AI Skin Analysis"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "t:sections.consultation.feature_description",
+          "default": "Instant results using advanced dermatology algorithms."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.consultation.name",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "auto_awesome",
+            "title": "AI Skin Analysis",
+            "description": "Instant results using advanced dermatology algorithms."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "support_agent",
+            "title": "Expert Consultation",
+            "description": "15-minute 1:1 video call with a Lumina specialist."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

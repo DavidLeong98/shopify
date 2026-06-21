@@ -4,6 +4,35 @@
     "not_found": "Page not found.",
     "back_to_shopping": "Back to shopping"
   },
+  "header": {
+    "navigation": "Main navigation",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Cart"
+  },
+  "footer": {
+    "email_label": "Email address",
+    "email_placeholder": "Email Address",
+    "subscribe": "Subscribe",
+    "rights": "All rights reserved."
+  },
+  "collection": {
+    "sort_by": "Sort by",
+    "filters": "Filters",
+    "price_range": "Price range",
+    "pagination": "Pagination",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "products": {
+    "quick_add": "Quick Add",
+    "add_to_bag": "Add to Bag",
+    "sold_out": "Sold Out",
+    "quantity": "Quantity",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity",
+    "free_shipping": "Free shipping on all orders over $150"
+  },
   "blog": {
     "article_comments": "Comments",
     "article_metadata_html": "{{ date }} by {{ author }}",

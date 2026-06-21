@@ -1,0 +1,159 @@
+<section class="rituals section-gap" style="background-color: var(--color-surface);">
+  <div class="rituals__inner container">
+    <div class="rituals__header">
+      {% if section.settings.eyebrow != blank %}
+        <span class="label-sm" style="color: var(--color-primary); display: block; margin-bottom: 16px;">{{ section.settings.eyebrow }}</span>
+      {% endif %}
+      <h2 class="display-lg">{{ section.settings.heading }}</h2>
+      {% if section.settings.subheading != blank %}
+        <p class="body-lg" style="color: var(--color-on-surface-variant); margin-top: 24px; max-width: 640px; margin-inline: auto;">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+    <div class="rituals__grid grid grid-2">
+      {% for block in section.blocks %}
+        <div class="ritual-card" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 800 | image_tag: class: 'ritual-card__image', loading: 'lazy' }}
+          {% endif %}
+          <div class="ritual-card__overlay">
+            <h3 class="headline-md" style="margin-bottom: 16px;">{{ block.settings.heading }}</h3>
+            <p style="margin-bottom: 24px;">{{ block.settings.description }}</p>
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link }}" class="btn-secondary" style="border-color: white; color: white;">
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+          <div class="ritual-card__title">
+            <h3 class="headline-md">{{ block.settings.heading }}</h3>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .rituals__header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .ritual-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background-color: white;
+  }
+  .ritual-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: transform 1s ease;
+  }
+  .ritual-card:hover .ritual-card__image {
+    transform: scale(1.1);
+  }
+  .ritual-card__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    text-align: center;
+    color: white;
+  }
+  .ritual-card:hover .ritual-card__overlay {
+    opacity: 1;
+  }
+  .ritual-card__title {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    transition: opacity 0.3s ease;
+  }
+  .ritual-card:hover .ritual-card__title {
+    opacity: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.rituals.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.rituals.eyebrow",
+      "default": "The Art of Care"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.rituals.heading",
+      "default": "The Lumina Rituals"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "t:sections.rituals.subheading",
+      "default": "Synergistic product pairings designed to elevate your daily routine into a meditative self-care experience."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ritual",
+      "name": "t:sections.rituals.ritual",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.rituals.image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.rituals.ritual_heading",
+          "default": "The Morning Awakening"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "t:sections.rituals.description",
+          "default": "Cleanse, Hydrate, and Protect for an all-day luminous glow."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.rituals.button_label",
+          "default": "Shop Ritual — $180"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.rituals.button_link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rituals.name",
+      "blocks": [
+        {
+          "type": "ritual"
+        },
+        {
+          "type": "ritual"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

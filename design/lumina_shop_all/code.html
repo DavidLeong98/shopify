@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUMINA | Rituals &amp; Collections</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#f7decf",
+                    "background": "#fbf9f8",
+                    "surface-container-highest": "#e4e2e1",
+                    "on-primary-fixed-variant": "#4c463e",
+                    "outline": "#7d766e",
+                    "on-tertiary-container": "#7a675b",
+                    "surface-tint": "#645d55",
+                    "secondary": "#675d54",
+                    "primary-fixed": "#ebe1d6",
+                    "secondary-fixed": "#eee0d5",
+                    "on-primary-container": "#706a61",
+                    "on-tertiary-fixed-variant": "#544339",
+                    "surface-container-low": "#f6f3f2",
+                    "primary": "#645d55",
+                    "inverse-on-surface": "#f3f0f0",
+                    "secondary-fixed-dim": "#d2c4b9",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#1f1b14",
+                    "surface": "#fbf9f8",
+                    "primary-fixed-dim": "#cec5bb",
+                    "on-background": "#1b1c1c",
+                    "primary-container": "#f5ebe0",
+                    "inverse-surface": "#303030",
+                    "on-secondary-fixed": "#211a14",
+                    "on-secondary-fixed-variant": "#4e453d",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#dac2b4",
+                    "outline-variant": "#cec5bc",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#6d5b4f",
+                    "on-secondary-container": "#6b6158",
+                    "surface-container": "#f0eded",
+                    "surface-bright": "#fbf9f8",
+                    "surface-container-high": "#eae7e7",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#4b463f",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#cec5bb",
+                    "tertiary-container": "#ffe8db",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#261910",
+                    "secondary-container": "#ebddd2",
+                    "surface-dim": "#dcd9d9",
+                    "surface-variant": "#e4e2e1",
+                    "on-surface": "#1b1c1c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "section-gap": "120px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px",
+                    "margin-desktop": "64px",
+                    "unit": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": ["Playfair Display"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "headline-md": ["Playfair Display"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Playfair Display"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        .product-card:hover .quick-add {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cec5bc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-tertiary-container selection:text-on-tertiary-container">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 dark:bg-background/80 backdrop-blur-md border-b border-outline-variant/30 dark:border-outline/20">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<a class="font-display-lg text-display-lg text-primary dark:text-primary-fixed-dim tracking-tighter" href="#">LUMINA</a>
+<div class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b border-primary pb-1 font-body-md text-body-md uppercase tracking-wider" href="#">Collections</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-body-md text-body-md uppercase tracking-wider" href="#">New Arrivals</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-body-md text-body-md uppercase tracking-wider" href="#">Best Sellers</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-body-md text-body-md uppercase tracking-wider" href="#">Rituals</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="hover:opacity-70 transition-opacity duration-300"><span class="material-symbols-outlined">search</span></button>
+<button class="hover:opacity-70 transition-opacity duration-300"><span class="material-symbols-outlined">person</span></button>
+<button class="hover:opacity-70 transition-opacity duration-300 relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-section-gap max-w-container-max mx-auto px-margin-desktop">
+<!-- Header & Controls -->
+<header class="mb-16">
+<h1 class="font-display-lg text-display-lg text-primary mb-4">All Rituals</h1>
+<div class="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-outline-variant pb-6">
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    Discover our collection of high-potency formulas designed to elevate your daily self-care into a meditative experience.
+                </p>
+<div class="flex items-center gap-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Sort By</span>
+<div class="relative group">
+<button class="flex items-center gap-2 font-label-sm text-label-sm uppercase tracking-widest border-b border-primary pb-1">
+                            Newest Arrivals
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<div class="absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest shadow-SoftAmbient opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 border border-outline-variant/30">
+<div class="py-2">
+<a class="block px-4 py-2 font-label-sm text-label-sm hover:bg-surface-container-low" href="#">Price: Low to High</a>
+<a class="block px-4 py-2 font-label-sm text-label-sm hover:bg-surface-container-low" href="#">Price: High to Low</a>
+<a class="block px-4 py-2 font-label-sm text-label-sm hover:bg-surface-container-low" href="#">Best Selling</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-col md:flex-row gap-gutter">
+<!-- Sidebar Filters -->
+<aside class="w-full md:w-64 shrink-0 space-y-10 sticky top-32 h-fit hidden md:block">
+<div>
+<h3 class="font-label-sm text-label-sm text-primary uppercase mb-6 tracking-widest">Skin Type</h3>
+<div class="space-y-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded-none border-outline text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface-variant group-hover:text-primary transition-colors">Oily &amp; Acne Prone</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded-none border-outline text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface-variant group-hover:text-primary transition-colors">Dry &amp; Dehydrated</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded-none border-outline text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface-variant group-hover:text-primary transition-colors">Sensitive</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded-none border-outline text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface-variant group-hover:text-primary transition-colors">Mature</span>
+</label>
+</div>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-primary uppercase mb-6 tracking-widest">Concern</h3>
+<div class="space-y-4">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded-none border-outline text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface-variant group-hover:text-primary transition-colors">Anti-Aging</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded-none border-outline text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface-variant group-hover:text-primary transition-colors">Brightening</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded-none border-outline text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface-variant group-hover:text-primary transition-colors">Hydration</span>
+</label>
+</div>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-primary uppercase mb-6 tracking-widest">Price Range</h3>
+<div class="px-2">
+<input class="w-full h-1 bg-surface-container-high appearance-none cursor-pointer accent-primary" max="200" min="0" type="range"/>
+<div class="flex justify-between mt-4 font-label-sm text-label-sm text-on-surface-variant">
+<span>$0</span>
+<span>$200+</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Product Grid -->
+<section class="flex-1">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-16">
+<!-- Product Card 1 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container-low mb-6">
+<img class="product-image w-full h-full object-cover transition-transform duration-700 ease-in-out" data-alt="A high-end glass bottle of amber-colored facial serum standing on a minimalist cream-colored stone pedestal. The lighting is soft and directional, casting elegant long shadows against a warm beige background. The overall aesthetic is clean, luxurious, and peaceful, embodying a quiet luxury lifestyle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-L8Q7OmbzKH57xvPVZf5ljE_BQj2k4-tQI8D4KtviNGXlv7QWyb58y4jJN7m-VFnLkPF8qVmF7EXxQ_prRhWu2qp0gst7Soc7TvzSCLjMZFzyNE3Q-qnI-qIsxuqwED08xoyuiG7LTUs6M7jH-WANx590BhAY49t6SIDE6Ty81E7sIh5i3GIv928ugJ9ZrixqsXZ49easU5VU-XVKuoiajZdscBDsa3V091-DirnTQnGS1Bfc_KN54SA9hfzQWCJx4Bgi6FoZlDU"/>
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-on-primary py-3 font-label-sm text-label-sm uppercase tracking-widest hover:bg-on-background transition-colors">
+                                    Quick Add — $84
+                                </button>
+</div>
+<span class="absolute top-4 left-4 font-label-sm text-label-sm bg-surface-container-lowest/80 backdrop-blur px-3 py-1 uppercase tracking-widest text-primary">New</span>
+</div>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Serum</p>
+<h3 class="font-headline-md text-headline-md text-primary">Golden Hour Elixir</h3>
+<p class="font-body-md text-on-surface-variant">Vitamin C + Hyaluronic Acid</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container-low mb-6">
+<img class="product-image w-full h-full object-cover transition-transform duration-700 ease-in-out" data-alt="A sleek white minimalist tub of luxury face cream with a matte finish. It is placed on a reflective glass surface with soft white flowers in the background, creating a serene and clinical trust environment. The color palette is dominated by off-whites, creams, and soft grays, evoking a sense of pure hydration." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhYDdIEnYGSxwFHLY79NU8FrUsuxjqq7_NM20WP8keb836xbP8odN7AX6xFYmB9yTpBzf8_DCkpQqnK56XGLaJf_4v0Y1n4CSIRjp-Z9tLCUIBRGtc8CqKbzX4pHdnMh-wO88Ul3fsTFR6nfjfmR2Hd5an0Ltn_E9_d3buuxuuLEYNJTnxfX_Ck8AxAq9yIdvPvUGMOJV4zhJ_69faksPmiBl-73WHAxnUQ9jhtvQA-58968xXbZIVhNRrFCBZhAwDhic3bn92abk"/>
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-on-primary py-3 font-label-sm text-label-sm uppercase tracking-widest hover:bg-on-background transition-colors">
+                                    Quick Add — $62
+                                </button>
+</div>
+</div>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Moisturizer</p>
+<h3 class="font-headline-md text-headline-md text-primary">Ceramide Barrier Cream</h3>
+<p class="font-body-md text-on-surface-variant">Deep Hydration &amp; Repair</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container-low mb-6">
+<img class="product-image w-full h-full object-cover transition-transform duration-700 ease-in-out" data-alt="A frosted glass bottle of clear liquid facial cleanser with a black minimalist pump. The bottle is partially submerged in crystal clear rippling water, highlighting the pure and refreshing nature of the product. The lighting is bright and airy, with high-key whites and soft blue undertones for a refreshing aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy8KGpQniEpFnin2_Lzp3T0RaTWZZgpjyY1_WlQCJUaMmh0nHXwhkE8wc5_br52vTsCwgIfM9qNx_vht7bp-dNggB4dBknwWV5Z6hbds2FrZ_uGyZyi4tqIMZkC4gBsJytIKpnZJLPEzSqx61bygjH8w4gRj0tdhlU1Vhh8eIyd4h0xC46ZBPWdcOtYqvCiFOnEW5ACGi4EPOQe7E-8pJAmMNAck0xbUzhQPzT1Z77S4kXxuv72xGqZgvhOhc5-eEzC_A_a44ml8U"/>
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-on-primary py-3 font-label-sm text-label-sm uppercase tracking-widest hover:bg-on-background transition-colors">
+                                    Quick Add — $48
+                                </button>
+</div>
+</div>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Cleanser</p>
+<h3 class="font-headline-md text-headline-md text-primary">Gentle Earth Wash</h3>
+<p class="font-body-md text-on-surface-variant">Botanical Enzyme Blend</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container-low mb-6">
+<img class="product-image w-full h-full object-cover transition-transform duration-700 ease-in-out" data-alt="An elegant dropper bottle of dark indigo night oil against a backdrop of deep midnight blue velvet. Subtle hints of gold and charcoal create a nocturnal and high-end feel. The composition is artistic and moody, focusing on the luxury of nighttime recovery and repair in a quiet luxury setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtql1d1BgoQKm9YmI5iuLkWP1iyotxOfwnX2J2zSCVL4xV2zvzywI1mA8WC65--K6A9YPTcK4qvcKG9YWDoYvWz9GiQn64ou0UUmfEAtS4YeQyfLya1k2jJbI2IQynLd-heTPUISq2jxc3qx4paENYOnCf6UfmWMIso8xzj4-YMm_edEHLaNgb1IrWQNSFDQkoZY-MplFOvctOygion_hQhRleQUhBOkEbycOhf-59AJBAeyAm_e0tS0DMju_FETUhF8BR2uS_Vr0"/>
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-on-primary py-3 font-label-sm text-label-sm uppercase tracking-widest hover:bg-on-background transition-colors">
+                                    Quick Add — $95
+                                </button>
+</div>
+<span class="absolute top-4 left-4 font-label-sm text-label-sm bg-surface-container-lowest/80 backdrop-blur px-3 py-1 uppercase tracking-widest text-primary">Best Seller</span>
+</div>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Oil</p>
+<h3 class="font-headline-md text-headline-md text-primary">Midnight Renewal Oil</h3>
+<p class="font-body-md text-on-surface-variant">Retinol &amp; Blue Tansy</p>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container-low mb-6">
+<img class="product-image w-full h-full object-cover transition-transform duration-700 ease-in-out" data-alt="A minimalist beige tube of mineral sunscreen resting on a bed of fine white sand. The scene is illuminated by harsh, bright sunlight, creating high-contrast shadows that emphasize the texture of the sand and the clean lines of the product. The color palette is sun-bleached and natural, suggesting effective protection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfQmwx8WF7ajAM2BDfWXFDEIEtzoLlbeFOMKTeoa9nBGB9Yx4j9fsDwp6MDX6Y8yIrPzCPG6fYX9CEstkmyzWTvkTk7_3pwcLBbox2nRhOiscLByRlxIO82M_JYhucAIoaPvycvRzZ3UPD15D8hVAM2EzdxtOeyNjEGwukcEehQq8EBAty9kWTq9uxA9vfuCLTARITkAEgC9G9Udf0GwZ4HYIBZrzjuoeIxLOl_feEOyvIL7JmAoxUBoRjzzdVdsW69yBsJvUZZ3M"/>
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-on-primary py-3 font-label-sm text-label-sm uppercase tracking-widest hover:bg-on-background transition-colors">
+                                    Quick Add — $38
+                                </button>
+</div>
+</div>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Protection</p>
+<h3 class="font-headline-md text-headline-md text-primary">Silk Sheen SPF 50</h3>
+<p class="font-body-md text-on-surface-variant">Mineral-Based Protection</p>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="product-card group cursor-pointer">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container-low mb-6">
+<img class="product-image w-full h-full object-cover transition-transform duration-700 ease-in-out" data-alt="A large glass jar of pink clay mask with a wooden applicator spoon resting beside it on a marble surface. Soft, ethereal lighting fills the frame, creating a spa-like atmosphere. The background is a blurred green botanical garden, hinting at the natural and organic ingredients within the high-end skincare product." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxuvD3g_kVj0SS9LQ8H4VU3hrntW9LbNNq7JKjgHro3-tvDUy57sfJzNL6sNdh8bcOqRIwhVbUCP8fYlQH7crKy7RK1Hf7Cg_Vc-LyMRs_yU7Vy46O1QZwCG8U9R-nnvPweTJojCsPzcEkzqi4aNgLIHkFuNfWG1y7Czm0H-m47w0IK8kxEEMT5sdBP57u8G2tejBRL3lQK4NlUmHMPD0VV2zeTf9b8BkeZLzre7tuwh1g9HGjtazKBLT0YE5easrT4lSbl0rplgQ"/>
+<div class="quick-add absolute bottom-0 left-0 w-full p-4 opacity-0 transform translate-y-4 transition-all duration-300">
+<button class="w-full bg-primary text-on-primary py-3 font-label-sm text-label-sm uppercase tracking-widest hover:bg-on-background transition-colors">
+                                    Quick Add — $54
+                                </button>
+</div>
+</div>
+<div class="space-y-1">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Treatment</p>
+<h3 class="font-headline-md text-headline-md text-primary">Rose Quartz Detox</h3>
+<p class="font-body-md text-on-surface-variant">Clarifying Pink Clay</p>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-24 flex justify-center items-center gap-8">
+<button class="flex items-center gap-2 font-label-sm text-label-sm uppercase tracking-widest text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+                        Previous
+                    </button>
+<div class="flex gap-4">
+<span class="font-label-sm text-label-sm text-primary border-b border-primary pb-1">01</span>
+<span class="font-label-sm text-label-sm text-outline hover:text-primary cursor-pointer transition-colors">02</span>
+<span class="font-label-sm text-label-sm text-outline hover:text-primary cursor-pointer transition-colors">03</span>
+</div>
+<button class="flex items-center gap-2 font-label-sm text-label-sm uppercase tracking-widest text-outline hover:text-primary transition-colors">
+                        Next
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-lowest w-full py-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<h2 class="font-display-lg text-display-lg text-primary dark:text-primary-fixed-dim mb-6">LUMINA</h2>
+<p class="text-on-surface-variant font-body-md">Refined skincare for the modern ritual. Cultivating wellness through scientific precision and sensory calm.</p>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-secondary mb-6 uppercase tracking-widest">Collection</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Shop All</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">New Arrivals</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-secondary mb-6 uppercase tracking-widest">Client Care</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Shipping &amp; Returns</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Contact Us</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-secondary mb-6 uppercase tracking-widest">Journal</h4>
+<p class="text-on-surface-variant font-body-md mb-4">Join our community for seasonal rituals and product launches.</p>
+<div class="flex border-b border-outline-variant pb-2">
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md placeholder:text-outline-variant" placeholder="Email Address" type="email"/>
+<button class="material-symbols-outlined text-primary">arrow_forward</button>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop mt-20 pt-8 border-t border-outline-variant/30 flex justify-between items-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 LUMINA SKINCARE. ALL RIGHTS RESERVED.</p>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">camera</span></a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for the filter checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if(this.checked) {
+                    label.classList.add('text-primary', 'font-semibold');
+                } else {
+                    label.classList.remove('text-primary', 'font-semibold');
+                }
+            });
+        });
+
+        // Sticky nav scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body></html>

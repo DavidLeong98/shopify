@@ -1,18 +1,32 @@
 {% style %}
-  {% # Loads all font variantions with display: swap %}
-  {{ settings.type_primary_font | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.type_display_font | font_face: font_display: 'swap' }}
+  {{ settings.type_display_font | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
+  {{ settings.type_display_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+  {{ settings.type_body_font | font_face: font_display: 'swap' }}
+  {{ settings.type_body_font | font_modify: 'weight', '300' | font_face: font_display: 'swap' }}
+  {{ settings.type_body_font | font_modify: 'weight', '600' | font_face: font_display: 'swap' }}
 
   :root {
-    --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
-    --font-primary--style: {{ settings.type_primary_font.style }};
-    --font-primary--weight: {{ settings.type_primary_font.weight }};
-    --page-width: {{ settings.max_page_width }};
-    --page-margin: {{ settings.min_page_margin }}px;
-    --color-background: {{ settings.background_color }};
-    --color-foreground: {{ settings.foreground_color }};
-    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+    --font-display: {{ settings.type_display_font.family }}, {{ settings.type_display_font.fallback_families }};
+    --font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-display-weight: {{ settings.type_display_font.weight }};
+    --font-body-weight: {{ settings.type_body_font.weight }};
+
+    --color-primary: {{ settings.color_primary }};
+    --color-on-primary: {{ settings.color_on_primary }};
+    --color-background: {{ settings.color_background }};
+    --color-on-background: {{ settings.color_on_background }};
+    --color-surface: {{ settings.color_surface }};
+    --color-on-surface-variant: {{ settings.color_on_surface_variant }};
+    --color-outline: {{ settings.color_outline }};
+    --color-outline-variant: {{ settings.color_outline_variant }};
+    --color-tertiary-container: {{ settings.color_tertiary_container }};
+    --color-on-tertiary-container: {{ settings.color_on_tertiary_container }};
+
+    --max-width: {{ settings.max_page_width }}px;
+    --section-gap: {{ settings.section_gap }}px;
+    --gutter: 24px;
+    --margin-desktop: 64px;
+    --margin-mobile: 16px;
   }
 {% endstyle %}

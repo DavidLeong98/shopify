@@ -1,22 +1,38 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "type": "footer",
-  "name": "t:general.footer",
+  "name": "t:sections.footer.name",
   "sections": {
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
+        "tagline": "Ethereal beauty through refined clinical science.",
+        "show_newsletter": true,
         "show_payment_icons": true
-      }
+      },
+      "blocks": {
+        "shop_col": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer"
+          }
+        },
+        "care_col": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Care",
+            "menu": "footer"
+          }
+        },
+        "legal_col": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Legal",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": ["shop_col", "care_col", "legal_col"]
     }
   },
   "order": [

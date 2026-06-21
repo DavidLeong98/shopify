@@ -1,20 +1,86 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "The Essence of Calm",
+        "heading": "Radiance Awaits",
+        "subheading": "Discover a sensory journey of clinical precision and botanical grace. Our rituals are designed to illuminate your natural beauty through the philosophy of restraint.",
+        "button_label": "Shop the Collection",
+        "button_secondary_label": "Explore Rituals"
+      }
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Curated for You",
+        "heading": "Best Sellers",
+        "products_to_show": 6,
+        "link_label": "View All Products"
+      }
+    },
+    "rituals": {
+      "type": "rituals",
+      "settings": {
+        "eyebrow": "The Art of Care",
+        "heading": "The Lumina Rituals",
+        "subheading": "Synergistic product pairings designed to elevate your daily routine into a meditative self-care experience."
+      },
+      "blocks": {
+        "morning": {
+          "type": "ritual",
+          "settings": {
+            "heading": "The Morning Awakening",
+            "description": "Cleanse, Hydrate, and Protect for an all-day luminous glow.",
+            "button_label": "Shop Ritual — $180"
+          }
+        },
+        "evening": {
+          "type": "ritual",
+          "settings": {
+            "heading": "The Evening Repose",
+            "description": "Detoxify and repair while you rest with our signature night set.",
+            "button_label": "Shop Ritual — $225"
+          }
+        }
+      },
+      "block_order": ["morning", "evening"]
+    },
+    "consultation": {
+      "type": "consultation",
+      "settings": {
+        "stat_number": "8+",
+        "stat_label": "Years of Research",
+        "eyebrow": "Personalized Guidance",
+        "heading": "Your Skin, Mastered.",
+        "description": "Not sure where to begin? Our specialists provide complimentary digital consultations to design a bespoke ritual tailored to your skin's unique needs and environmental stressors.",
+        "button_label": "Start Consultation"
+      },
+      "blocks": {
+        "ai": {
+          "type": "feature",
+          "settings": {
+            "icon": "auto_awesome",
+            "title": "AI Skin Analysis",
+            "description": "Instant results using advanced dermatology algorithms."
+          }
+        },
+        "expert": {
+          "type": "feature",
+          "settings": {
+            "icon": "support_agent",
+            "title": "Expert Consultation",
+            "description": "15-minute 1:1 video call with a Lumina specialist."
+          }
+        }
+      },
+      "block_order": ["ai", "expert"]
     }
   },
   "order": [
-    "main"
+    "hero",
+    "featured_products",
+    "rituals",
+    "consultation"
   ]
 }
