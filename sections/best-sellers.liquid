@@ -1,0 +1,207 @@
+<section class="best-sellers section-gap">
+  <div class="best-sellers__inner container">
+    <div class="best-sellers__header">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <span class="best-sellers__eyebrow label-sm">{{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2 class="display-lg">{{ section.settings.heading }}</h2>
+      </div>
+      {% if section.settings.link_label != blank %}
+        <a href="{{ section.settings.link_url }}" class="best-sellers__view-all label-sm">
+          {{ section.settings.link_label }}
+        </a>
+      {% endif %}
+    </div>
+    <div class="best-sellers__slider">
+      {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+        <article class="best-sellers__card">
+          <div class="best-sellers__card-media">
+            {% if product.featured_image != blank %}
+              {{ product.featured_image | image_url: width: 600, height: 800 | image_tag: class: 'best-sellers__card-image', loading: 'lazy' }}
+            {% endif %}
+            {% if product.metafields.custom.badge != blank %}
+              <span class="best-sellers__badge label-sm">{{ product.metafields.custom.badge }}</span>
+            {% endif %}
+            <a href="{{ product.url }}" class="best-sellers__quick-add label-sm">
+              {{ 'products.quick_add' | t }} — {{ product.price | money }}
+            </a>
+          </div>
+          <div class="best-sellers__card-body">
+            <h3 class="headline-md">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+            <p class="best-sellers__card-description body-md">
+              {{ product.metafields.descriptors.subtitle.value | default: product.description | strip_html | truncate: 80 }}
+            </p>
+            <div class="best-sellers__tags">
+              {% for tag in product.tags limit: 3 %}
+                <span class="best-sellers__chip label-sm">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .best-sellers__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .best-sellers__eyebrow {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .best-sellers__view-all {
+    color: var(--color-primary);
+    border-bottom: 1px solid var(--color-primary);
+    padding-bottom: 4px;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+  .best-sellers__view-all:hover {
+    opacity: 0.6;
+  }
+  .best-sellers__slider {
+    display: flex;
+    gap: var(--space-gutter, 24px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 32px;
+    scrollbar-width: none;
+  }
+  .best-sellers__slider::-webkit-scrollbar {
+    display: none;
+  }
+  .best-sellers__card {
+    min-width: 300px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+  @media (min-width: 768px) {
+    .best-sellers__card {
+      min-width: 380px;
+    }
+  }
+  .best-sellers__card-media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    margin-bottom: 20px;
+    background-color: var(--color-surface-container-low);
+  }
+  .best-sellers__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .best-sellers__card:hover .best-sellers__card-image {
+    transform: scale(1.05);
+  }
+  .best-sellers__badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background-color: color-mix(in srgb, white 80%, transparent);
+    backdrop-filter: blur(4px);
+    padding: 4px 12px;
+    letter-spacing: 0.05em;
+  }
+  .best-sellers__quick-add {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    padding: 16px;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    letter-spacing: 0.05em;
+  }
+  .best-sellers__card:hover .best-sellers__quick-add {
+    transform: translateY(0);
+  }
+  .best-sellers__card-body {
+    padding-inline: 4px;
+  }
+  .best-sellers__card-description {
+    color: var(--color-on-surface-variant);
+    margin-top: 4px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .best-sellers__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .best-sellers__chip {
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.best_sellers.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.best_sellers.eyebrow",
+      "default": "Curated for You"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.best_sellers.heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.best_sellers.collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "t:sections.best_sellers.products_to_show",
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "t:sections.best_sellers.link_label",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "t:sections.best_sellers.link_url"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.best_sellers.name"
+    }
+  ]
+}
+{% endschema %}

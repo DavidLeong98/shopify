@@ -1,31 +1,34 @@
-<section class="rituals section-gap" style="background-color: var(--color-surface);">
+<section class="rituals section-gap" style="background-color: var(--color-surface-container-low);">
   <div class="rituals__inner container">
     <div class="rituals__header">
       {% if section.settings.eyebrow != blank %}
-        <span class="label-sm" style="color: var(--color-primary); display: block; margin-bottom: 16px;">{{ section.settings.eyebrow }}</span>
+        <span class="rituals__eyebrow text-label">{{ section.settings.eyebrow }}</span>
       {% endif %}
-      <h2 class="display-lg">{{ section.settings.heading }}</h2>
+      <h2 class="text-display">{{ section.settings.heading }}</h2>
       {% if section.settings.subheading != blank %}
-        <p class="body-lg" style="color: var(--color-on-surface-variant); margin-top: 24px; max-width: 640px; margin-inline: auto;">{{ section.settings.subheading }}</p>
+        <p class="rituals__subheading text-body-large">{{ section.settings.subheading }}</p>
       {% endif %}
     </div>
-    <div class="rituals__grid grid grid-2">
+    <div class="rituals__grid">
       {% for block in section.blocks %}
         <div class="ritual-card" {{ block.shopify_attributes }}>
           {% if block.settings.image != blank %}
             {{ block.settings.image | image_url: width: 800 | image_tag: class: 'ritual-card__image', loading: 'lazy' }}
           {% endif %}
           <div class="ritual-card__overlay">
-            <h3 class="headline-md" style="margin-bottom: 16px;">{{ block.settings.heading }}</h3>
-            <p style="margin-bottom: 24px;">{{ block.settings.description }}</p>
+            <h3 class="text-headline ritual-card__overlay-title">{{ block.settings.heading }}</h3>
+            <p class="ritual-card__overlay-desc body-md">{{ block.settings.description }}</p>
+            {% if block.settings.price != blank %}
+              <span class="ritual-card__price text-label">{{ block.settings.price }}</span>
+            {% endif %}
             {% if block.settings.button_label != blank %}
-              <a href="{{ block.settings.button_link }}" class="btn-secondary" style="border-color: white; color: white;">
+              <a href="{{ block.settings.button_link }}" class="btn btn--secondary ritual-card__btn">
                 {{ block.settings.button_label }}
               </a>
             {% endif %}
           </div>
           <div class="ritual-card__title">
-            <h3 class="headline-md">{{ block.settings.heading }}</h3>
+            <h3 class="text-headline">{{ block.settings.heading }}</h3>
           </div>
         </div>
       {% endfor %}
@@ -38,27 +41,52 @@
     text-align: center;
     margin-bottom: 64px;
   }
+  .rituals__eyebrow {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .rituals__subheading {
+    color: var(--color-on-surface-variant);
+    margin-top: 24px;
+    max-width: 640px;
+    margin-inline: auto;
+    line-height: 1.7;
+  }
+  .rituals__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-gutter, 24px);
+  }
+  @media (min-width: 768px) {
+    .rituals__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
   .ritual-card {
     position: relative;
     overflow: hidden;
     aspect-ratio: 16/9;
-    background-color: white;
+    background-color: var(--color-surface);
+    cursor: pointer;
   }
   .ritual-card__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.8;
-    transition: transform 1s ease;
+    opacity: 0.85;
+    transition: transform 0.8s ease;
   }
   .ritual-card:hover .ritual-card__image {
-    transform: scale(1.1);
+    transform: scale(1.08);
   }
   .ritual-card__overlay {
     position: absolute;
     inset: 0;
-    background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
-    backdrop-filter: blur(4px);
+    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+    backdrop-filter: blur(6px);
     opacity: 0;
     transition: opacity 0.5s ease;
     display: flex;
@@ -72,11 +100,34 @@
   .ritual-card:hover .ritual-card__overlay {
     opacity: 1;
   }
+  .ritual-card__overlay-title {
+    margin-bottom: 16px;
+  }
+  .ritual-card__overlay-desc {
+    margin-bottom: 16px;
+    max-width: 320px;
+    line-height: 1.6;
+  }
+  .ritual-card__price {
+    margin-bottom: 24px;
+    letter-spacing: 0.1em;
+    opacity: 0.9;
+  }
+  .ritual-card__btn {
+    border-color: white;
+    color: white;
+  }
+  .ritual-card__btn:hover {
+    background-color: white;
+    color: var(--color-primary);
+  }
   .ritual-card__title {
     position: absolute;
     bottom: 24px;
     left: 24px;
+    color: white;
     transition: opacity 0.3s ease;
+    text-shadow: 0 1px 4px color-mix(in srgb, black 40%, transparent);
   }
   .ritual-card:hover .ritual-card__title {
     opacity: 0;
@@ -130,9 +181,15 @@
         },
         {
           "type": "text",
+          "id": "price",
+          "label": "t:sections.rituals.price",
+          "default": "$180"
+        },
+        {
+          "type": "text",
           "id": "button_label",
           "label": "t:sections.rituals.button_label",
-          "default": "Shop Ritual — $180"
+          "default": "Shop Ritual"
         },
         {
           "type": "url",
@@ -147,10 +204,22 @@
       "name": "t:sections.rituals.name",
       "blocks": [
         {
-          "type": "ritual"
+          "type": "ritual",
+          "settings": {
+            "heading": "The Morning Awakening",
+            "description": "Cleanse, Hydrate, and Protect for an all-day luminous glow.",
+            "price": "$180",
+            "button_label": "Shop Ritual"
+          }
         },
         {
-          "type": "ritual"
+          "type": "ritual",
+          "settings": {
+            "heading": "The Evening Restoration",
+            "description": "Repair, Nourish, and Rejuvenate while you rest.",
+            "price": "$210",
+            "button_label": "Shop Ritual"
+          }
         }
       ]
     }

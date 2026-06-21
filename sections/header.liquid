@@ -1,52 +1,147 @@
-<header class="header" role="banner">
+{%- comment -%}
+  LUMINA Header — fixed top nav with scroll hide/show, mobile hamburger menu.
+  Uses Material Symbols Outlined for icons.
+{%- endcomment -%}
+
+{% if section.settings.announcement_text != blank %}
+  <div class="announcement-bar">
+    <p class="announcement-bar__text">{{ section.settings.announcement_text }}</p>
+  </div>
+{% endif %}
+
+<header class="header" role="banner" id="site-header">
   <nav class="header__inner container" aria-label="{{ 'header.navigation' | t }}">
     <div class="header__left">
-      <a href="{{ routes.root_url }}" class="header__logo display-lg">
-        {{ shop.name }}
+      <a href="{{ routes.root_url }}" class="header__logo">
+        {{ section.settings.logo_text | default: shop.name }}
       </a>
       <ul class="header__nav" role="list">
         {% for link in section.settings.menu.links %}
           <li>
-            <a href="{{ link.url }}" class="header__nav-link label-sm {% if link.active %}header__nav-link--active{% endif %}">
+            <a
+              href="{{ link.url }}"
+              class="header__nav-link{% if link.active %} header__nav-link--active{% endif %}"
+            >
               {{ link.title }}
             </a>
           </li>
         {% endfor %}
       </ul>
     </div>
+
     <div class="header__actions">
       <a href="{{ routes.search_url }}" class="header__icon" aria-label="{{ 'header.search' | t }}">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-        </svg>
+        <span class="material-symbols-outlined" aria-hidden="true">search</span>
       </a>
       {% if shop.customer_accounts_enabled %}
         <a href="{{ routes.account_url }}" class="header__icon" aria-label="{{ 'header.account' | t }}">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
-          </svg>
+          <span class="material-symbols-outlined" aria-hidden="true">person</span>
         </a>
       {% endif %}
       <a href="{{ routes.cart_url }}" class="header__icon header__cart" aria-label="{{ 'header.cart' | t }}">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
-        </svg>
+        <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
         {% if cart.item_count > 0 %}
           <span class="header__cart-count">{{ cart.item_count }}</span>
         {% endif %}
       </a>
+      <button
+        class="header__menu-toggle"
+        aria-label="{{ 'header.navigation' | t }}"
+        aria-expanded="false"
+        aria-controls="header-mobile-nav"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile navigation drawer -->
+  <div class="header__mobile-nav" id="header-mobile-nav" aria-hidden="true">
+    <ul class="header__mobile-list" role="list">
+      {% for link in section.settings.menu.links %}
+        <li>
+          <a
+            href="{{ link.url }}"
+            class="header__mobile-link{% if link.active %} header__mobile-link--active{% endif %}"
+          >
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </header>
 
+<script>
+  (function() {
+    var header = document.getElementById('site-header');
+    var toggle = header.querySelector('.header__menu-toggle');
+    var mobileNav = document.getElementById('header-mobile-nav');
+    var lastScrollY = 0;
+    var ticking = false;
+
+    function onScroll() {
+      var currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        header.classList.add('header--hidden');
+      } else {
+        header.classList.remove('header--hidden');
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    toggle.addEventListener('click', function() {
+      var expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      mobileNav.setAttribute('aria-hidden', String(expanded));
+      header.classList.toggle('header--mobile-open', !expanded);
+
+      var icon = toggle.querySelector('.material-symbols-outlined');
+      icon.textContent = expanded ? 'menu' : 'close';
+    });
+  })();
+</script>
+
 {% stylesheet %}
+  /* --- Announcement Bar --- */
+  .announcement-bar {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    text-align: center;
+    padding: 8px var(--gutter);
+  }
+  .announcement-bar__text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* --- Header --- */
   .header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 50;
+    left: 0;
+    right: 0;
+    z-index: 100;
     background-color: color-mix(in srgb, var(--color-background) 80%, transparent);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
+    transition: transform 0.3s ease;
+  }
+  .header--hidden {
+    transform: translateY(-100%);
   }
   .header__inner {
     display: flex;
@@ -57,73 +152,174 @@
   .header__left {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 40px;
   }
+
+  /* Logo */
   .header__logo {
-    font-size: clamp(24px, 3vw, 48px);
+    font-family: var(--font-heading);
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 500;
     letter-spacing: -0.04em;
-    color: var(--color-primary);
+    color: var(--color-on-background);
+    text-decoration: none;
+    line-height: 1;
   }
+
+  /* Desktop nav */
   .header__nav {
     display: none;
     list-style: none;
     padding: 0;
+    margin: 0;
     gap: 32px;
   }
   @media (min-width: 768px) {
-    .header__nav { display: flex; }
+    .header__nav {
+      display: flex;
+    }
   }
   .header__nav-link {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--color-on-surface-variant);
-    transition: color 0.3s ease;
+    text-decoration: none;
     padding-bottom: 4px;
+    border-bottom: 1.5px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
   }
   .header__nav-link:hover {
     color: var(--color-primary);
   }
   .header__nav-link--active {
-    color: var(--color-primary);
+    color: var(--color-on-background);
     font-weight: 700;
-    border-bottom: 1px solid var(--color-primary);
+    border-bottom-color: var(--color-on-background);
   }
+
+  /* Actions */
   .header__actions {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
   }
   .header__icon {
-    color: var(--color-primary);
+    color: var(--color-on-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: opacity 0.3s ease;
+    text-decoration: none;
   }
-  .header__icon:hover { opacity: 0.7; }
+  .header__icon:hover {
+    opacity: 0.6;
+  }
+  .header__icon .material-symbols-outlined {
+    font-size: 22px;
+  }
   .header__cart {
     position: relative;
   }
   .header__cart-count {
     position: absolute;
-    top: -4px;
-    right: -4px;
-    width: 14px;
-    height: 14px;
+    top: -5px;
+    right: -7px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
     background-color: var(--color-primary);
     color: var(--color-on-primary);
-    font-size: 8px;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 600;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1;
+  }
+
+  /* Mobile menu toggle */
+  .header__menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-on-background);
+  }
+  @media (min-width: 768px) {
+    .header__menu-toggle {
+      display: none;
+    }
+  }
+
+  /* Mobile nav drawer */
+  .header__mobile-nav {
+    display: none;
+    background-color: var(--color-background);
+    padding: 24px var(--gutter);
+    border-top: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
+  }
+  .header--mobile-open .header__mobile-nav {
+    display: block;
+  }
+  @media (min-width: 768px) {
+    .header__mobile-nav {
+      display: none !important;
+    }
+  }
+  .header__mobile-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .header__mobile-link {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .header__mobile-link:hover,
+  .header__mobile-link--active {
+    color: var(--color-on-background);
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:sections.header.name",
+  "class": "section-header",
   "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "LUMINA"
+    },
     {
       "type": "link_list",
       "id": "menu",
       "default": "main-menu",
       "label": "t:sections.header.menu"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Complimentary shipping on orders over $150"
     }
   ]
 }

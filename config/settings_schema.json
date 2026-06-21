@@ -8,84 +8,102 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "t:settings.colors.name",
+    "settings": [
+      {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "Background",
+            "info": "Main background color"
+          },
+          {
+            "type": "color",
+            "id": "on_background",
+            "label": "On background",
+            "info": "Text on background"
+          },
+          {
+            "type": "color",
+            "id": "primary",
+            "label": "Primary",
+            "info": "Primary accent color"
+          },
+          {
+            "type": "color",
+            "id": "on_primary",
+            "label": "On primary",
+            "info": "Text on primary"
+          },
+          {
+            "type": "color",
+            "id": "secondary",
+            "label": "Secondary",
+            "info": "Secondary color"
+          },
+          {
+            "type": "color",
+            "id": "outline",
+            "label": "Outline",
+            "info": "Border and divider color"
+          }
+        ],
+        "role": {
+          "background": {
+            "solid": "background"
+          },
+          "text": "on_background",
+          "icons": "primary",
+          "links": "primary",
+          "primary_button": "primary",
+          "on_primary_button": "on_primary",
+          "primary_button_border": "primary",
+          "secondary_button": "background",
+          "on_secondary_button": "primary",
+          "secondary_button_border": "outline"
+        }
+      }
+    ]
+  },
+  {
     "name": "t:settings.typography.name",
     "settings": [
       {
         "type": "font_picker",
-        "id": "type_display_font",
+        "id": "type_heading_font",
         "default": "playfair_display_n5",
-        "label": "t:settings.typography.display_font"
+        "label": "t:settings.typography.heading_font",
+        "info": "Used for display and headline text"
       },
       {
         "type": "font_picker",
         "id": "type_body_font",
         "default": "plus_jakarta_sans_n4",
-        "label": "t:settings.typography.body_font"
-      }
-    ]
-  },
-  {
-    "name": "t:settings.colors.name",
-    "settings": [
-      {
-        "type": "color",
-        "id": "color_primary",
-        "default": "#645d55",
-        "label": "t:settings.colors.primary"
+        "label": "t:settings.typography.body_font",
+        "info": "Used for body text, labels, and UI elements"
       },
       {
-        "type": "color",
-        "id": "color_on_primary",
-        "default": "#ffffff",
-        "label": "t:settings.colors.on_primary"
+        "type": "range",
+        "id": "heading_font_scale",
+        "min": 80,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading font size scale",
+        "default": 100
       },
       {
-        "type": "color",
-        "id": "color_background",
-        "default": "#fbf9f8",
-        "label": "t:settings.colors.background"
-      },
-      {
-        "type": "color",
-        "id": "color_on_background",
-        "default": "#1b1c1c",
-        "label": "t:settings.colors.on_background"
-      },
-      {
-        "type": "color",
-        "id": "color_surface",
-        "default": "#f6f3f2",
-        "label": "t:settings.colors.surface"
-      },
-      {
-        "type": "color",
-        "id": "color_on_surface_variant",
-        "default": "#4b463f",
-        "label": "t:settings.colors.on_surface_variant"
-      },
-      {
-        "type": "color",
-        "id": "color_outline",
-        "default": "#7d766e",
-        "label": "t:settings.colors.outline"
-      },
-      {
-        "type": "color",
-        "id": "color_outline_variant",
-        "default": "#cec5bc",
-        "label": "t:settings.colors.outline_variant"
-      },
-      {
-        "type": "color",
-        "id": "color_tertiary_container",
-        "default": "#ffe8db",
-        "label": "t:settings.colors.tertiary_container"
-      },
-      {
-        "type": "color",
-        "id": "color_on_tertiary_container",
-        "default": "#7a675b",
-        "label": "t:settings.colors.on_tertiary_container"
+        "type": "range",
+        "id": "body_font_scale",
+        "min": 80,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "Body font size scale",
+        "default": 100
       }
     ]
   },
@@ -111,6 +129,106 @@
         "unit": "px",
         "label": "t:settings.layout.section_gap",
         "default": 120
+      },
+      {
+        "type": "range",
+        "id": "gutter",
+        "min": 16,
+        "max": 48,
+        "step": 4,
+        "unit": "px",
+        "label": "Grid gutter",
+        "default": 24
+      }
+    ]
+  },
+  {
+    "name": "t:settings.logo.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:settings.logo.image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "t:settings.logo.width",
+        "default": 120
+      },
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Logo text",
+        "default": "LUMINA",
+        "info": "Shown when no logo image is set"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.announcement.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_enabled",
+        "label": "Show announcement bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_bar_text",
+        "label": "Announcement text",
+        "default": "Complimentary shipping on orders over $75"
+      },
+      {
+        "type": "url",
+        "id": "announcement_bar_link",
+        "label": "Announcement link"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social.name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "info": "https://www.instagram.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "info": "https://www.tiktok.com/@shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest",
+        "info": "https://www.pinterest.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "info": "https://www.facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "X (Twitter)",
+        "info": "https://www.x.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube",
+        "info": "https://www.youtube.com/shopify"
       }
     ]
   }

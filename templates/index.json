@@ -10,8 +10,8 @@
         "button_secondary_label": "Explore Rituals"
       }
     },
-    "featured_products": {
-      "type": "featured-products",
+    "best-sellers": {
+      "type": "best-sellers",
       "settings": {
         "eyebrow": "Curated for You",
         "heading": "Best Sellers",
@@ -79,7 +79,7 @@
   },
   "order": [
     "hero",
-    "featured_products",
+    "best-sellers",
     "rituals",
     "consultation"
   ]

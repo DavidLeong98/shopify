@@ -15,7 +15,7 @@
 
       <div class="pdp__details">
         <div class="pdp__meta">
-          <span class="label-sm" style="color: var(--color-on-surface-variant);">{{ product.type }}</span>
+          <span class="text-label" style="color: var(--color-on-surface-variant);">{{ product.type }}</span>
           {% if product.metafields.reviews.rating.value != blank %}
             <div class="pdp__rating">
               {% assign rating = product.metafields.reviews.rating.value.rating | round: 1 %}
@@ -28,10 +28,10 @@
           {% endif %}
         </div>
 
-        <h1 class="display-lg" style="margin-bottom: 16px;">{{ product.title }}</h1>
+        <h1 class="text-display" style="margin-bottom: 16px;">{{ product.title }}</h1>
 
         {% if product.description != blank %}
-          <p class="body-lg" style="color: var(--color-on-surface-variant); max-width: 480px; margin-bottom: 24px;">
+          <p class="text-body-large" style="color: var(--color-on-surface-variant); max-width: 480px; margin-bottom: 24px;">
             {{ product.description | strip_html | truncate: 200 }}
           </p>
         {% endif %}
@@ -53,7 +53,7 @@
             <div class="pdp__variants">
               {% for option in product.options_with_values %}
                 <div class="pdp__option">
-                  <label class="label-sm" for="option-{{ option.name | handleize }}">{{ option.name }}</label>
+                  <label class="text-label" for="option-{{ option.name | handleize }}">{{ option.name }}</label>
                   <select id="option-{{ option.name | handleize }}" class="pdp__option-select" name="options[{{ option.name }}]">
                     {% for value in option.values %}
                       <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>
@@ -68,7 +68,7 @@
 
           <div class="pdp__add-section">
             <div class="pdp__quantity">
-              <span class="label-sm" style="color: var(--color-on-surface-variant);">{{ 'products.quantity' | t }}</span>
+              <span class="text-label" style="color: var(--color-on-surface-variant);">{{ 'products.quantity' | t }}</span>
               <div class="pdp__quantity-controls">
                 <button type="button" class="pdp__qty-btn" aria-label="{{ 'products.decrease' | t }}" onclick="this.nextElementSibling.stepDown(); this.nextElementSibling.dispatchEvent(new Event('change'))">-</button>
                 <input type="number" name="quantity" value="1" min="1" class="pdp__qty-input" aria-label="{{ 'products.quantity' | t }}">
@@ -76,7 +76,7 @@
               </div>
             </div>
 
-            <button type="submit" class="btn-primary pdp__add-btn" {% unless current_variant.available %}disabled{% endunless %}>
+            <button type="submit" class="btn btn--primary pdp__add-btn" {% unless current_variant.available %}disabled{% endunless %}>
               {% if current_variant.available %}
                 {{ 'products.add_to_bag' | t }}
               {% else %}
@@ -84,7 +84,7 @@
               {% endif %}
             </button>
 
-            <p class="pdp__shipping-note label-sm" style="text-align: center; color: var(--color-on-surface-variant);">
+            <p class="pdp__shipping-note text-label" style="text-align: center; color: var(--color-on-surface-variant);">
               {{ 'products.free_shipping' | t }}
             </p>
           </div>
@@ -99,7 +99,7 @@
         {% for block in section.blocks %}
           {% if block.type == 'accordion' %}
             <details class="pdp__accordion" {{ block.shopify_attributes }}>
-              <summary class="pdp__accordion-title label-sm">
+              <summary class="pdp__accordion-title text-label">
                 {{ block.settings.heading }}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></svg>
               </summary>

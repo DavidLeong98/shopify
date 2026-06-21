@@ -3,12 +3,12 @@
     <div class="featured-products__header">
       <div>
         {% if section.settings.eyebrow != blank %}
-          <span class="label-sm" style="color: var(--color-primary); display: block; margin-bottom: 8px;">{{ section.settings.eyebrow }}</span>
+          <span class="text-label" style="color: var(--color-primary); display: block; margin-bottom: 8px;">{{ section.settings.eyebrow }}</span>
         {% endif %}
-        <h2 class="display-lg">{{ section.settings.heading }}</h2>
+        <h2 class="text-display">{{ section.settings.heading }}</h2>
       </div>
       {% if section.settings.link_label != blank %}
-        <a href="{{ section.settings.link_url }}" class="featured-products__view-all label-sm">{{ section.settings.link_label }}</a>
+        <a href="{{ section.settings.link_url }}" class="featured-products__view-all text-label">{{ section.settings.link_label }}</a>
       {% endif %}
     </div>
     <div class="featured-products__slider">
@@ -19,13 +19,13 @@
               {{ product.featured_image | image_url: width: 600, height: 800 | image_tag: class: 'product-card__image', loading: 'lazy' }}
             {% endif %}
             {% if product.metafields.custom.badge != blank %}
-              <span class="product-card__badge label-sm">{{ product.metafields.custom.badge }}</span>
+              <span class="product-card__badge text-label">{{ product.metafields.custom.badge }}</span>
             {% endif %}
             <a href="{{ product.url }}" class="product-card__quick-add">
               {{ 'products.quick_add' | t }} — {{ product.price | money }}
             </a>
           </div>
-          <h4 class="headline-md" style="margin-bottom: 4px;">
+          <h4 class="text-headline" style="margin-bottom: 4px;">
             <a href="{{ product.url }}">{{ product.title }}</a>
           </h4>
           <p style="color: var(--color-on-surface-variant); margin-bottom: 8px;">{{ product.metafields.descriptors.subtitle.value | default: product.vendor }}</p>

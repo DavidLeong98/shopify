@@ -105,6 +105,15 @@
       "link_label": "Link label",
       "link_url": "Link URL"
     },
+    "best_sellers": {
+      "name": "Best sellers",
+      "eyebrow": "Eyebrow text",
+      "heading": "Heading",
+      "collection": "Collection",
+      "products_to_show": "Products to show",
+      "link_label": "Link label",
+      "link_url": "Link URL"
+    },
     "rituals": {
       "name": "Rituals",
       "eyebrow": "Eyebrow text",
@@ -114,6 +123,7 @@
       "image": "Image",
       "ritual_heading": "Ritual heading",
       "description": "Description",
+      "price": "Price",
       "button_label": "Button label",
       "button_link": "Button link"
     },

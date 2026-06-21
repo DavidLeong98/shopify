@@ -1,7 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "product",
+      "type": "product-detail",
       "settings": {},
       "blocks": {
         "ingredients": {
@@ -15,12 +15,28 @@
           "settings": {
             "heading": "Usage Instructions"
           }
+        },
+        "reviews": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Reviews"
+          }
         }
       },
-      "block_order": ["ingredients", "usage"]
+      "block_order": ["ingredients", "usage", "reviews"]
+    },
+    "related-products": {
+      "type": "best-sellers",
+      "settings": {
+        "eyebrow": "Pairs Well With",
+        "heading": "Complete Your Ritual",
+        "products_to_show": 4,
+        "link_label": "View All Products"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "related-products"
   ]
 }

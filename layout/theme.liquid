@@ -1,24 +1,81 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
-    {% render 'css-variables' %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    <title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
 
-    {% render 'meta-tags' %}
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Font preloads for Playfair Display and Plus Jakarta Sans -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+
+    <!-- Material Symbols Outlined for icon system -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+
+    <!-- CSS Custom Properties from theme settings -->
+    <style>
+      :root {
+        --font-heading: 'Playfair Display', serif;
+        --font-body: 'Plus Jakarta Sans', sans-serif;
+        --heading-font-scale: {{ settings.heading_font_scale | default: 100 | divided_by: 100.0 }};
+        --body-font-scale: {{ settings.body_font_scale | default: 100 | divided_by: 100.0 }};
+        --space-container-max: {{ settings.max_page_width | default: 1280 }}px;
+        --space-section-gap: {{ settings.section_gap | default: 120 }}px;
+        --space-gutter: {{ settings.gutter | default: 24 }}px;
+      }
+    </style>
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
 
     {{ content_for_header }}
+
+    {%- if request.page_type == 'index' -%}
+      <link rel="canonical" href="{{ shop.url }}">
+    {%- endif -%}
   </head>
 
-  <body>
+  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}--{{ template.suffix }}{% endif %}">
+    <a href="#main-content" class="visually-hidden">{{ 'accessibility.skip_to_content' | t }}</a>
+
     {% sections 'header-group' %}
 
-    <main id="main-content">
+    <main id="main-content" role="main">
       {{ content_for_layout }}
     </main>
 
     {% sections 'footer-group' %}
 
-    {% render 'cart-script' %}
+    <!-- Scroll Reveal Animation -->
+    <script>
+      (function() {
+        var elements = document.querySelectorAll('.reveal');
+        if (!elements.length) return;
+
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal--visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        elements.forEach(function(el) {
+          observer.observe(el);
+        });
+      })();
+    </script>
   </body>
 </html>

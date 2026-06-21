@@ -1,90 +1,142 @@
 {
-  "404": {
-    "title": "404",
-    "not_found": "Page not found.",
-    "back_to_shopping": "Back to shopping"
-  },
-  "header": {
-    "navigation": "Main navigation",
-    "search": "Search",
-    "account": "Account",
-    "cart": "Cart"
-  },
-  "footer": {
-    "email_label": "Email address",
-    "email_placeholder": "Email Address",
-    "subscribe": "Subscribe",
-    "rights": "All rights reserved."
-  },
-  "collection": {
-    "sort_by": "Sort by",
-    "filters": "Filters",
-    "price_range": "Price range",
-    "pagination": "Pagination",
-    "previous": "Previous",
-    "next": "Next"
-  },
-  "products": {
-    "quick_add": "Quick Add",
-    "add_to_bag": "Add to Bag",
-    "sold_out": "Sold Out",
-    "quantity": "Quantity",
-    "increase": "Increase quantity",
-    "decrease": "Decrease quantity",
-    "free_shipping": "Free shipping on all orders over $150"
-  },
-  "blog": {
-    "article_comments": "Comments",
-    "article_metadata_html": "{{ date }} by {{ author }}",
-    "comment_form_body": "Comment",
-    "comment_form_email": "Email",
-    "comment_form_name": "Name",
-    "comment_form_submit": "Post",
-    "comment_form_title": "Add a comment"
-  },
-  "cart": {
-    "checkout": "Checkout",
-    "title": "Your Bag",
-    "update": "Update",
-    "remove": "Remove",
-    "empty": "Your bag is currently empty.",
-    "continue_shopping": "Continue Shopping",
-    "summary": "Order Summary",
-    "subtotal": "Subtotal",
-    "shipping": "Shipping",
-    "shipping_calculated": "Calculated at checkout",
-    "total": "Total",
-    "adding": "Adding...",
-    "added": "Added to Bag"
-  },
-  "customers": {
-    "login": {
-      "email": "Email",
-      "password": "Password",
-      "submit": "Sign in",
-      "title": "Login"
+  "general": {
+    "cart": {
+      "title": "Your Bag",
+      "checkout": "Checkout",
+      "update": "Update",
+      "remove": "Remove",
+      "empty": "Your bag is currently empty.",
+      "continue_shopping": "Continue Shopping",
+      "summary": "Order Summary",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "shipping_calculated": "Calculated at checkout",
+      "total": "Total",
+      "adding": "Adding...",
+      "added": "Added to Bag"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search articles, pages, or products",
+      "submit": "Search",
+      "no_results_html": "No results found for {{ terms }}",
+      "results_for_html": "{{ count }} results found for {{ terms }}"
+    },
+    "newsletter": {
+      "email_label": "Email address",
+      "email_placeholder": "Email Address",
+      "subscribe": "Subscribe",
+      "success": "Thank you for subscribing."
+    },
+    "404": {
+      "title": "404",
+      "not_found": "Page not found.",
+      "back_to_shopping": "Back to shopping"
     }
   },
-  "collections": {
-    "title": "Collections"
+  "sections": {
+    "header": {
+      "navigation": "Main navigation",
+      "shop": "Shop",
+      "rituals": "Rituals",
+      "about": "About",
+      "journal": "Journal",
+      "search": "Search",
+      "account": "Account",
+      "cart": "Cart"
+    },
+    "footer": {
+      "shop_heading": "Shop",
+      "about_heading": "About",
+      "support_heading": "Support",
+      "shop_all": "All products",
+      "shop_bestsellers": "Best sellers",
+      "shop_new": "New arrivals",
+      "shop_rituals": "Rituals",
+      "about_story": "Our story",
+      "about_ingredients": "Ingredients",
+      "about_sustainability": "Sustainability",
+      "support_contact": "Contact us",
+      "support_shipping": "Shipping & Returns",
+      "support_faq": "FAQ",
+      "copyright": "All rights reserved.",
+      "rights": "All rights reserved."
+    },
+    "hero": {
+      "eyebrow": "The Essence of Calm",
+      "headline": "Radiance Awaits",
+      "body": "Discover a sensory journey of clinical precision and botanical grace. Our rituals are designed to illuminate your natural beauty through the philosophy of restraint.",
+      "button_primary": "Shop the Collection",
+      "button_secondary": "Explore Rituals"
+    },
+    "best_sellers": {
+      "eyebrow": "Curated for You",
+      "heading": "Best Sellers",
+      "view_all": "View All Products",
+      "quick_add": "Quick Add",
+      "sold_out": "Sold Out"
+    },
+    "rituals": {
+      "eyebrow": "The Art of Care",
+      "heading": "The Lumina Rituals",
+      "body": "Synergistic product pairings designed to elevate your daily routine into a meditative self-care experience.",
+      "morning_heading": "The Morning Awakening",
+      "morning_description": "Cleanse, Hydrate, and Protect for an all-day luminous glow.",
+      "morning_button": "Shop Ritual — $180",
+      "evening_heading": "The Evening Repose",
+      "evening_description": "Detoxify and repair while you rest with our signature night set.",
+      "evening_button": "Shop Ritual — $225",
+      "button": "Shop Ritual"
+    },
+    "consultation": {
+      "eyebrow": "Personalized Guidance",
+      "heading": "Your Skin, Mastered.",
+      "body": "Not sure where to begin? Our specialists provide complimentary digital consultations to design a bespoke ritual tailored to your skin's unique needs and environmental stressors.",
+      "stat_number": "8+",
+      "stat_label": "Years of Research",
+      "feature_ai_title": "AI Skin Analysis",
+      "feature_ai_description": "Instant results using advanced dermatology algorithms.",
+      "feature_expert_title": "Expert Consultation",
+      "feature_expert_description": "15-minute 1:1 video call with a Lumina specialist.",
+      "button": "Start Consultation"
+    },
+    "product_detail": {
+      "add_to_bag": "Add to Bag",
+      "quantity": "Quantity",
+      "increase_quantity": "Increase quantity",
+      "decrease_quantity": "Decrease quantity",
+      "ingredients": "Ingredients",
+      "usage": "Usage Instructions",
+      "reviews": "Reviews",
+      "free_shipping": "Free shipping on all orders over $150",
+      "complete_ritual": "Complete Your Ritual",
+      "pairs_well_with": "Pairs Well With",
+      "sold_out": "Sold Out"
+    },
+    "collection": {
+      "sort_by": "Sort by",
+      "sort_featured": "Featured",
+      "sort_price_asc": "Price, low to high",
+      "sort_price_desc": "Price, high to low",
+      "sort_newest": "Newest",
+      "sort_best_selling": "Best selling",
+      "filters": "Filters",
+      "filter_price": "Price range",
+      "filter_type": "Product type",
+      "filter_clear": "Clear all",
+      "filter_apply": "Apply filters",
+      "pagination": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "products_count": "{{ count }} products"
+    }
   },
-  "gift_card": {
-    "add_to_apple_wallet": "Add to Apple Wallet",
-    "card": "Gift card",
-    "expired": "This gift card has expired",
-    "expires_on": "Expires on {{ expires_on }}",
-    "use_at_checkout": "Use this gift card at checkout"
-  },
-  "password": {
-    "title": "This shop is private",
-    "password": "Password",
-    "enter": "Enter"
-  },
-  "search": {
-    "title": "Search",
-    "placeholder": "Search articles, pages, or products",
-    "submit": "Search",
-    "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "menu_toggle": "Toggle navigation menu",
+    "cart_count": "{{ count }} items in cart",
+    "close_modal": "Close",
+    "loading": "Loading",
+    "image_alt": "Image of {{ title }}"
   }
 }

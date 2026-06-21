@@ -2,12 +2,12 @@
   <div class="cart-page__inner container">
     {% if cart.item_count == 0 %}
       <div class="cart-page__empty">
-        <h1 class="display-lg" style="margin-bottom: 24px;">{{ 'cart.title' | t }}</h1>
-        <p class="body-lg" style="color: var(--color-on-surface-variant); margin-bottom: 40px;">{{ 'cart.empty' | t }}</p>
-        <a href="{{ routes.collections_url }}" class="btn-primary">{{ 'cart.continue_shopping' | t }}</a>
+        <h1 class="text-display" style="margin-bottom: 24px;">{{ 'cart.title' | t }}</h1>
+        <p class="text-body-large" style="color: var(--color-on-surface-variant); margin-bottom: 40px;">{{ 'cart.empty' | t }}</p>
+        <a href="{{ routes.collections_url }}" class="btn btn--primary">{{ 'cart.continue_shopping' | t }}</a>
       </div>
     {% else %}
-      <h1 class="display-lg" style="color: var(--color-primary); margin-bottom: 48px;">{{ 'cart.title' | t }}</h1>
+      <h1 class="text-display" style="color: var(--color-primary); margin-bottom: 48px;">{{ 'cart.title' | t }}</h1>
       <div class="cart-page__layout">
         <div class="cart-page__items">
           <form action="{{ routes.cart_url }}" method="post" id="cart-form">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="cart-item__details">
                   <div class="cart-item__info">
-                    <h3 class="headline-md" style="color: var(--color-primary);">
+                    <h3 class="text-headline" style="color: var(--color-primary);">
                       <a href="{{ item.url }}">{{ item.product.title }}</a>
                     </h3>
                     {% if item.variant.title != 'Default Title' %}
@@ -47,7 +47,7 @@
         </div>
 
         <div class="cart-page__summary">
-          <h3 class="headline-md" style="color: var(--color-primary); margin-bottom: 32px;">{{ 'cart.summary' | t }}</h3>
+          <h3 class="text-headline" style="color: var(--color-primary); margin-bottom: 32px;">{{ 'cart.summary' | t }}</h3>
           <div class="cart-page__totals">
             <div class="cart-page__total-row">
               <span style="color: var(--color-on-surface-variant);">{{ 'cart.subtotal' | t }}</span>
@@ -59,15 +59,15 @@
             </div>
           </div>
           <div class="cart-page__grand-total">
-            <span class="headline-md" style="color: var(--color-primary);">{{ 'cart.total' | t }}</span>
-            <span class="display-lg" style="font-size: 32px; color: var(--color-primary);">{{ cart.total_price | money }}</span>
+            <span class="text-headline" style="color: var(--color-primary);">{{ 'cart.total' | t }}</span>
+            <span class="text-display" style="font-size: 32px; color: var(--color-primary);">{{ cart.total_price | money }}</span>
           </div>
           <form action="{{ routes.cart_url }}" method="post">
-            <button type="submit" name="checkout" class="btn-primary cart-page__checkout-btn">
+            <button type="submit" name="checkout" class="btn btn--primary cart-page__checkout-btn">
               {{ 'cart.checkout' | t }} — {{ cart.total_price | money }}
             </button>
           </form>
-          <a href="{{ routes.collections_url }}" class="cart-page__continue label-sm">{{ 'cart.continue_shopping' | t }}</a>
+          <a href="{{ routes.collections_url }}" class="cart-page__continue text-label">{{ 'cart.continue_shopping' | t }}</a>
         </div>
       </div>
     {% endif %}

@@ -1,18 +1,68 @@
 {
   "current": {
-    "type_display_font": "playfair_display_n5",
+    "color_schemes": {
+      "scheme_1": {
+        "settings": {
+          "background": "#fbf9f8",
+          "on_background": "#1b1c1c",
+          "primary": "#645d55",
+          "on_primary": "#ffffff",
+          "secondary": "#675d54",
+          "outline": "#7d766e"
+        }
+      },
+      "scheme_2": {
+        "settings": {
+          "background": "#f6f3f2",
+          "on_background": "#1b1c1c",
+          "primary": "#645d55",
+          "on_primary": "#ffffff",
+          "secondary": "#675d54",
+          "outline": "#cec5bc"
+        }
+      },
+      "scheme_3": {
+        "settings": {
+          "background": "#f5ebe0",
+          "on_background": "#4b463f",
+          "primary": "#645d55",
+          "on_primary": "#ffffff",
+          "secondary": "#6d5b4f",
+          "outline": "#cec5bc"
+        }
+      },
+      "scheme_4": {
+        "settings": {
+          "background": "#ffe8db",
+          "on_background": "#7a675b",
+          "primary": "#6d5b4f",
+          "on_primary": "#ffffff",
+          "secondary": "#645d55",
+          "outline": "#7d766e"
+        }
+      },
+      "scheme_5": {
+        "settings": {
+          "background": "#645d55",
+          "on_background": "#ffffff",
+          "primary": "#f5ebe0",
+          "on_primary": "#1b1c1c",
+          "secondary": "#cec5bc",
+          "outline": "#7d766e"
+        }
+      }
+    },
+    "type_heading_font": "playfair_display_n5",
     "type_body_font": "plus_jakarta_sans_n4",
-    "color_primary": "#645d55",
-    "color_on_primary": "#ffffff",
-    "color_background": "#fbf9f8",
-    "color_on_background": "#1b1c1c",
-    "color_surface": "#f6f3f2",
-    "color_on_surface_variant": "#4b463f",
-    "color_outline": "#7d766e",
-    "color_outline_variant": "#cec5bc",
-    "color_tertiary_container": "#ffe8db",
-    "color_on_tertiary_container": "#7a675b",
+    "heading_font_scale": 100,
+    "body_font_scale": 100,
     "max_page_width": 1280,
-    "section_gap": 120
+    "section_gap": 120,
+    "gutter": 24,
+    "logo_text": "LUMINA",
+    "logo_width": 120,
+    "announcement_bar_enabled": true,
+    "announcement_bar_text": "Complimentary shipping on orders over $75",
+    "social_instagram": "https://www.instagram.com/lumina"
   }
 }
