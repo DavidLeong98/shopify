@@ -5,6 +5,7 @@
     "header": {
       "type": "header",
       "settings": {
+        "logo_text": "LUMINA",
         "menu": "main-menu"
       }
     }

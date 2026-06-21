@@ -16,11 +16,11 @@
     {% endif %}
 
     {% if product.metafields.custom.badge != blank %}
-      <span class="product-card__badge label-sm">{{ product.metafields.custom.badge }}</span>
+      <span class="product-card__badge text-label">{{ product.metafields.custom.badge }}</span>
     {% endif %}
 
     {% if show_quick_add %}
-      <span class="product-card__quick-add label-sm">
+      <span class="product-card__quick-add text-label">
         {{ 'products.quick_add' | t }} &mdash; {{ product.price | money }}
       </span>
     {% endif %}
@@ -28,14 +28,14 @@
 
   <div class="product-card__info">
     {% if product.type != blank %}
-      <span class="product-card__category label-sm">{{ product.type }}</span>
+      <span class="product-card__category text-label">{{ product.type }}</span>
     {% endif %}
 
-    <h4 class="product-card__title headline-md">
+    <h4 class="product-card__title text-headline">
       <a href="{{ product.url }}">{{ product.title }}</a>
     </h4>
 
-    <p class="product-card__subtitle body-md">
+    <p class="product-card__subtitle text-body">
       {{ product.metafields.descriptors.subtitle.value | default: product.description | strip_html | truncate: 80 }}
     </p>
   </div>
@@ -102,7 +102,7 @@
   }
 
   .product-card__title a {
-    color: var(--color-on-background);
+    color: var(--color-on-surface);
     text-decoration: none;
   }
 

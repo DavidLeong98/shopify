@@ -1,56 +1,64 @@
 {%- comment -%}
-  LUMINA Header — fixed top nav with scroll hide/show, mobile hamburger menu.
+  LUMINA Header — sticky glassmorphism nav with scroll hide/show, mobile drawer.
   Uses Material Symbols Outlined for icons.
 {%- endcomment -%}
 
-{% if section.settings.announcement_text != blank %}
-  <div class="announcement-bar">
-    <p class="announcement-bar__text">{{ section.settings.announcement_text }}</p>
-  </div>
-{% endif %}
-
 <header class="header" role="banner" id="site-header">
-  <nav class="header__inner container" aria-label="{{ 'header.navigation' | t }}">
+  <a class="visually-hidden" href="#main">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  <nav class="header__inner container" aria-label="{{ 'sections.header.navigation' | t }}">
     <div class="header__left">
-      <a href="{{ routes.root_url }}" class="header__logo">
+      <a href="{{ routes.root_url }}" class="header__logo text-headline">
         {{ section.settings.logo_text | default: shop.name }}
       </a>
       <ul class="header__nav" role="list">
-        {% for link in section.settings.menu.links %}
+        {%- for link in section.settings.menu.links -%}
           <li>
             <a
               href="{{ link.url }}"
-              class="header__nav-link{% if link.active %} header__nav-link--active{% endif %}"
+              class="header__nav-link text-label{% if link.active %} header__nav-link--active{% endif %}"
+              {% if link.current %}aria-current="page"{% endif %}
             >
               {{ link.title }}
             </a>
           </li>
-        {% endfor %}
+        {%- endfor -%}
       </ul>
     </div>
 
     <div class="header__actions">
-      <a href="{{ routes.search_url }}" class="header__icon" aria-label="{{ 'header.search' | t }}">
-        <span class="material-symbols-outlined" aria-hidden="true">search</span>
+      <a href="{{ routes.search_url }}" class="header__icon" aria-label="{{ 'sections.header.search' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
       </a>
-      {% if shop.customer_accounts_enabled %}
-        <a href="{{ routes.account_url }}" class="header__icon" aria-label="{{ 'header.account' | t }}">
-          <span class="material-symbols-outlined" aria-hidden="true">person</span>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="header__icon" aria-label="{{ 'sections.header.account' | t }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+          </svg>
         </a>
-      {% endif %}
-      <a href="{{ routes.cart_url }}" class="header__icon header__cart" aria-label="{{ 'header.cart' | t }}">
-        <span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>
-        {% if cart.item_count > 0 %}
-          <span class="header__cart-count">{{ cart.item_count }}</span>
-        {% endif %}
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="header__icon header__cart" aria-label="{{ 'sections.header.cart' | t }}{% if cart.item_count > 0 %} — {{ 'accessibility.cart_count' | t: count: cart.item_count }}{% endif %}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+        {%- endif -%}
       </a>
       <button
         class="header__menu-toggle"
-        aria-label="{{ 'header.navigation' | t }}"
+        aria-label="{{ 'accessibility.menu_toggle' | t }}"
         aria-expanded="false"
         aria-controls="header-mobile-nav"
       >
-        <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        <svg class="header__menu-icon--open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+        <svg class="header__menu-icon--close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
       </button>
     </div>
   </nav>
@@ -58,16 +66,17 @@
   <!-- Mobile navigation drawer -->
   <div class="header__mobile-nav" id="header-mobile-nav" aria-hidden="true">
     <ul class="header__mobile-list" role="list">
-      {% for link in section.settings.menu.links %}
+      {%- for link in section.settings.menu.links -%}
         <li>
           <a
             href="{{ link.url }}"
             class="header__mobile-link{% if link.active %} header__mobile-link--active{% endif %}"
+            {% if link.current %}aria-current="page"{% endif %}
           >
             {{ link.title }}
           </a>
         </li>
-      {% endfor %}
+      {%- endfor -%}
     </ul>
   </div>
 </header>
@@ -103,31 +112,12 @@
       toggle.setAttribute('aria-expanded', String(!expanded));
       mobileNav.setAttribute('aria-hidden', String(expanded));
       header.classList.toggle('header--mobile-open', !expanded);
-
-      var icon = toggle.querySelector('.material-symbols-outlined');
-      icon.textContent = expanded ? 'menu' : 'close';
     });
   })();
 </script>
 
 {% stylesheet %}
-  /* --- Announcement Bar --- */
-  .announcement-bar {
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
-    text-align: center;
-    padding: 8px var(--gutter);
-  }
-  .announcement-bar__text {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  /* --- Header --- */
+  /* --- Header: Sticky Glassmorphism --- */
   .header {
     position: fixed;
     top: 0;
@@ -135,10 +125,10 @@
     right: 0;
     z-index: 100;
     background-color: color-mix(in srgb, var(--color-background) 80%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
-    transition: transform 0.3s ease;
+    transition: transform var(--duration-normal) var(--easing-standard);
   }
   .header--hidden {
     transform: translateY(-100%);
@@ -147,12 +137,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-block: 16px;
+    padding-block: calc(var(--space-unit) * 2);
   }
   .header__left {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: calc(var(--space-unit) * 5);
   }
 
   /* Logo */
@@ -160,19 +150,15 @@
     font-family: var(--font-heading);
     font-size: clamp(22px, 2.5vw, 32px);
     font-weight: 500;
-    letter-spacing: -0.04em;
-    color: var(--color-on-background);
-    text-decoration: none;
+    letter-spacing: -0.02em;
+    color: var(--color-on-surface);
     line-height: 1;
   }
 
   /* Desktop nav */
   .header__nav {
     display: none;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 32px;
+    gap: calc(var(--space-unit) * 4);
   }
   @media (min-width: 768px) {
     .header__nav {
@@ -180,45 +166,40 @@
     }
   }
   .header__nav-link {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
+    font-size: var(--text-label-size);
+    font-weight: var(--text-label-weight);
+    letter-spacing: var(--text-label-letter-spacing);
     text-transform: uppercase;
     color: var(--color-on-surface-variant);
-    text-decoration: none;
     padding-bottom: 4px;
     border-bottom: 1.5px solid transparent;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition: color var(--duration-normal) var(--easing-standard),
+                border-color var(--duration-normal) var(--easing-standard);
   }
   .header__nav-link:hover {
     color: var(--color-primary);
   }
   .header__nav-link--active {
-    color: var(--color-on-background);
+    color: var(--color-on-surface);
     font-weight: 700;
-    border-bottom-color: var(--color-on-background);
+    border-bottom-color: var(--color-on-surface);
   }
 
   /* Actions */
   .header__actions {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: calc(var(--space-unit) * 2.5);
   }
   .header__icon {
-    color: var(--color-on-background);
+    color: var(--color-on-surface);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.3s ease;
-    text-decoration: none;
+    transition: opacity var(--duration-normal) var(--easing-standard);
   }
   .header__icon:hover {
     opacity: 0.6;
-  }
-  .header__icon .material-symbols-outlined {
-    font-size: 22px;
   }
   .header__cart {
     position: relative;
@@ -247,11 +228,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: var(--color-on-background);
+    color: var(--color-on-surface);
+  }
+  .header__menu-icon--close {
+    display: none;
+  }
+  .header--mobile-open .header__menu-icon--open {
+    display: none;
+  }
+  .header--mobile-open .header__menu-icon--close {
+    display: block;
   }
   @media (min-width: 768px) {
     .header__menu-toggle {
@@ -262,8 +248,10 @@
   /* Mobile nav drawer */
   .header__mobile-nav {
     display: none;
-    background-color: var(--color-background);
-    padding: 24px var(--gutter);
+    background-color: color-mix(in srgb, var(--color-background) 95%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: calc(var(--space-unit) * 3) var(--space-margin-mobile);
     border-top: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
   }
   .header--mobile-open .header__mobile-nav {
@@ -275,12 +263,9 @@
     }
   }
   .header__mobile-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: calc(var(--space-unit) * 2.5);
   }
   .header__mobile-link {
     font-family: var(--font-body);
@@ -289,12 +274,11 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-on-surface-variant);
-    text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--duration-normal) var(--easing-standard);
   }
   .header__mobile-link:hover,
   .header__mobile-link--active {
-    color: var(--color-on-background);
+    color: var(--color-on-surface);
   }
 {% endstylesheet %}
 
@@ -314,12 +298,6 @@
       "id": "menu",
       "default": "main-menu",
       "label": "t:sections.header.menu"
-    },
-    {
-      "type": "text",
-      "id": "announcement_text",
-      "label": "Announcement text",
-      "default": "Complimentary shipping on orders over $150"
     }
   ]
 }

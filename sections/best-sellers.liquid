@@ -3,45 +3,69 @@
     <div class="best-sellers__header">
       <div>
         {% if section.settings.eyebrow != blank %}
-          <span class="best-sellers__eyebrow label-sm">{{ section.settings.eyebrow }}</span>
+          <span class="best-sellers__eyebrow text-label">{{ section.settings.eyebrow }}</span>
         {% endif %}
-        <h2 class="display-lg">{{ section.settings.heading }}</h2>
+        <h2 class="text-display">{{ section.settings.heading }}</h2>
       </div>
       {% if section.settings.link_label != blank %}
-        <a href="{{ section.settings.link_url }}" class="best-sellers__view-all label-sm">
+        <a href="{{ section.settings.link_url | default: '/collections/all' }}" class="best-sellers__view-all text-label">
           {{ section.settings.link_label }}
         </a>
       {% endif %}
     </div>
     <div class="best-sellers__slider">
-      {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
-        <article class="best-sellers__card">
-          <div class="best-sellers__card-media">
-            {% if product.featured_image != blank %}
-              {{ product.featured_image | image_url: width: 600, height: 800 | image_tag: class: 'best-sellers__card-image', loading: 'lazy' }}
-            {% endif %}
-            {% if product.metafields.custom.badge != blank %}
-              <span class="best-sellers__badge label-sm">{{ product.metafields.custom.badge }}</span>
-            {% endif %}
-            <a href="{{ product.url }}" class="best-sellers__quick-add label-sm">
-              {{ 'products.quick_add' | t }} — {{ product.price | money }}
-            </a>
-          </div>
-          <div class="best-sellers__card-body">
-            <h3 class="headline-md">
-              <a href="{{ product.url }}">{{ product.title }}</a>
-            </h3>
-            <p class="best-sellers__card-description body-md">
-              {{ product.metafields.descriptors.subtitle.value | default: product.description | strip_html | truncate: 80 }}
-            </p>
-            <div class="best-sellers__tags">
-              {% for tag in product.tags limit: 3 %}
-                <span class="best-sellers__chip label-sm">{{ tag }}</span>
-              {% endfor %}
+      {% if section.settings.collection != blank and section.settings.collection.products.size > 0 %}
+        {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+          <article class="best-sellers__card product-card">
+            <div class="best-sellers__card-media product-card__media">
+              {% if product.featured_image != blank %}
+                {{ product.featured_image | image_url: width: 600 | image_tag: class: 'best-sellers__card-image', loading: 'lazy' }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+              {% endif %}
+              {% if product.metafields.custom.badge != blank %}
+                <span class="best-sellers__badge text-label">{{ product.metafields.custom.badge }}</span>
+              {% endif %}
+              <a href="{{ product.url }}" class="best-sellers__quick-add text-label" aria-label="{{ 'sections.best_sellers.quick_add' | t }} {{ product.title }} — {{ product.price | money }}">
+                {{ 'sections.best_sellers.quick_add' | t }} &mdash; {{ product.price | money }}
+              </a>
             </div>
-          </div>
-        </article>
-      {% endfor %}
+            <div class="best-sellers__card-body product-card__info">
+              <h3 class="product-card__title">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+              </h3>
+              <p class="best-sellers__card-description text-body">
+                {{ product.metafields.descriptors.subtitle.value | default: product.description | strip_html | truncate: 80 }}
+              </p>
+              <div class="best-sellers__tags">
+                {% for tag in product.tags limit: 3 %}
+                  <span class="best-sellers__chip text-label">{{ tag }}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..6) %}
+          {% assign placeholder_num = i | modulo: 6 | plus: 1 %}
+          <article class="best-sellers__card product-card">
+            <div class="best-sellers__card-media product-card__media">
+              {{ 'product-' | append: placeholder_num | placeholder_svg_tag: 'product-card__placeholder' }}
+              <span class="best-sellers__quick-add text-label">{{ 'sections.best_sellers.quick_add' | t }} &mdash; $65.00</span>
+            </div>
+            <div class="best-sellers__card-body product-card__info">
+              <h3 class="product-card__title">Sample Product {{ i }}</h3>
+              <p class="best-sellers__card-description text-body">
+                A brief description of this skincare product.
+              </p>
+              <div class="best-sellers__tags">
+                <span class="best-sellers__chip text-label">Hydrating</span>
+                <span class="best-sellers__chip text-label">Vegan</span>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
@@ -64,7 +88,7 @@
     color: var(--color-primary);
     border-bottom: 1px solid var(--color-primary);
     padding-bottom: 4px;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--duration-normal) var(--easing-standard);
     white-space: nowrap;
   }
   .best-sellers__view-all:hover {
@@ -72,7 +96,7 @@
   }
   .best-sellers__slider {
     display: flex;
-    gap: var(--space-gutter, 24px);
+    gap: var(--space-gutter);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding-bottom: 32px;
@@ -102,7 +126,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform var(--duration-slow) var(--easing-decelerate);
   }
   .best-sellers__card:hover .best-sellers__card-image {
     transform: scale(1.05);
@@ -126,7 +150,7 @@
     padding: 16px;
     text-align: center;
     transform: translateY(100%);
-    transition: transform 0.3s ease;
+    transition: transform var(--duration-normal) var(--easing-standard);
     letter-spacing: 0.05em;
   }
   .best-sellers__card:hover .best-sellers__quick-add {
@@ -190,7 +214,7 @@
       "type": "text",
       "id": "link_label",
       "label": "t:sections.best_sellers.link_label",
-      "default": "View All"
+      "default": "View All Products"
     },
     {
       "type": "url",

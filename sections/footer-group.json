@@ -5,6 +5,7 @@
     "footer": {
       "type": "footer",
       "settings": {
+        "logo_text": "LUMINA",
         "tagline": "Ethereal beauty through refined clinical science.",
         "show_newsletter": true,
         "show_payment_icons": true

@@ -1,43 +1,45 @@
 <section class="collection-grid section-gap">
   <div class="collection-grid__inner container">
     <header class="collection-grid__header">
-      <h1 class="display-lg" style="color: var(--color-primary); margin-bottom: 16px;">{{ collection.title }}</h1>
+      <h1 class="text-display" style="color: var(--color-primary); margin-bottom: 16px;">{{ collection.title }}</h1>
       <div class="collection-grid__header-row">
         {% if collection.description != blank %}
-          <p class="body-lg" style="color: var(--color-on-surface-variant); max-width: 560px;">{{ collection.description }}</p>
+          <p class="text-body-large" style="max-width: 560px;">{{ collection.description }}</p>
         {% endif %}
-        <div class="collection-grid__sort">
-          <span class="label-sm" style="color: var(--color-on-surface-variant);">{{ 'collection.sort_by' | t }}</span>
-          {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
-          <button class="collection-grid__sort-btn label-sm" aria-haspopup="listbox" aria-expanded="false">
-            {% for option in collection.sort_options %}
-              {% if option.value == sort_by %}
-                <span class="collection-grid__sort-current">{{ option.name }}</span>
-              {% endif %}
-            {% endfor %}
-            <svg class="collection-grid__sort-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
-          </button>
-          <ul class="collection-grid__sort-dropdown" role="listbox" aria-label="{{ 'collection.sort_by' | t }}">
-            {% for option in collection.sort_options %}
-              <li role="option" {% if option.value == sort_by %}aria-selected="true"{% endif %}>
-                <a href="{{ collection.url }}?sort_by={{ option.value }}" class="collection-grid__sort-option label-sm">
-                  {{ option.name }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
+        {% if section.settings.show_sort %}
+          <div class="collection-grid__sort">
+            <span class="text-label" style="color: var(--color-on-surface-variant);">{{ 'sections.collection.sort_by' | t }}</span>
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            <button class="collection-grid__sort-btn text-label" aria-haspopup="listbox" aria-expanded="false">
+              {% for option in collection.sort_options %}
+                {% if option.value == sort_by %}
+                  <span class="collection-grid__sort-current">{{ option.name }}</span>
+                {% endif %}
+              {% endfor %}
+              <svg class="collection-grid__sort-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul class="collection-grid__sort-dropdown" role="listbox" aria-label="{{ 'sections.collection.sort_by' | t }}">
+              {% for option in collection.sort_options %}
+                <li role="option" {% if option.value == sort_by %}aria-selected="true"{% endif %}>
+                  <a href="{{ collection.url }}?sort_by={{ option.value }}" class="collection-grid__sort-option text-label">
+                    {{ option.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
       </div>
     </header>
 
     <div class="collection-grid__layout">
       {% if section.settings.show_filters %}
-        <aside class="collection-grid__filters" aria-label="{{ 'collection.filters' | t }}">
+        <aside class="collection-grid__filters" aria-label="{{ 'sections.collection.filters' | t }}">
           {% for filter in collection.filters %}
             <details class="collection-grid__filter-group" open>
-              <summary class="collection-grid__filter-title label-sm">{{ filter.label }}</summary>
+              <summary class="collection-grid__filter-title text-label">{{ filter.label }}</summary>
               <div class="collection-grid__filter-options">
                 {% if filter.type == 'price_range' %}
                   <div class="collection-grid__price-range">
@@ -47,9 +49,9 @@
                       max="{{ filter.range_max | money_without_currency | round }}"
                       value="{{ filter.max_value.value | default: filter.range_max | money_without_currency | round }}"
                       class="collection-grid__range-input"
-                      aria-label="{{ 'collection.price_range' | t }}"
+                      aria-label="{{ 'sections.collection.filter_price' | t }}"
                     >
-                    <div class="collection-grid__price-labels label-sm">
+                    <div class="collection-grid__price-labels text-label">
                       <span>{{ filter.min_value.value | default: 0 | money }}</span>
                       <span>{{ filter.max_value.value | default: filter.range_max | money }}</span>
                     </div>
@@ -63,7 +65,7 @@
                         value="{{ value.value }}"
                         {% if value.active %}checked{% endif %}
                       >
-                      <span class="collection-grid__filter-label">{{ value.label }}</span>
+                      <span class="collection-grid__filter-label text-body">{{ value.label }}</span>
                       <span class="collection-grid__filter-count">({{ value.count }})</span>
                     </label>
                   {% endfor %}
@@ -78,32 +80,63 @@
         {% paginate collection.products by section.settings.products_per_page %}
           <div class="collection-grid__grid">
             {% for product in collection.products %}
-              {% render 'product-card', product: product, show_quick_add: true %}
+              <div class="product-card">
+                <a href="{{ product.url }}" class="product-card__image-container">
+                  {% if product.featured_image != blank %}
+                    {{ product.featured_image | image_url: width: 800 | image_tag: class: 'product-card__image', loading: 'lazy', alt: product.title }}
+                  {% else %}
+                    <svg class="product-card__placeholder" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <rect width="400" height="500" fill="var(--color-surface-container-low)"/>
+                      <path d="M175 220 a25 25 0 1 1 50 0 a25 25 0 1 1 -50 0 M150 280 l40-30 30 20 40-50 40 60 v20 H150Z" fill="var(--color-outline-variant)" opacity="0.5"/>
+                    </svg>
+                  {% endif %}
+
+                  {% if product.metafields.custom.badge != blank %}
+                    <span class="product-card__badge text-label">{{ product.metafields.custom.badge }}</span>
+                  {% endif %}
+
+                  <span class="product-card__quick-add text-label">
+                    {{ 'sections.best_sellers.quick_add' | t }} &mdash; {{ product.price | money }}
+                  </span>
+                </a>
+
+                <div class="product-card__info">
+                  {% if product.type != blank %}
+                    <span class="product-card__category text-label">{{ product.type }}</span>
+                  {% endif %}
+                  <h3 class="product-card__title text-headline">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                  </h3>
+                  <p class="product-card__subtitle text-body">
+                    {{ product.metafields.descriptors.subtitle.value | default: product.description | strip_html | truncate: 80 }}
+                  </p>
+                </div>
+              </div>
             {% endfor %}
           </div>
 
           {% if paginate.pages > 1 %}
-            <nav class="collection-grid__pagination" aria-label="{{ 'collection.pagination' | t }}">
+            <nav class="collection-grid__pagination" aria-label="{{ 'sections.collection.pagination' | t }}">
               {% if paginate.previous %}
-                <a href="{{ paginate.previous.url }}" class="collection-grid__page-link label-sm" aria-label="{{ 'collection.previous' | t }}">
+                <a href="{{ paginate.previous.url }}" class="collection-grid__page-link text-label" aria-label="{{ 'sections.collection.previous' | t }}">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M19 12H5m7-7-7 7 7 7"/>
                   </svg>
-                  {{ 'collection.previous' | t }}
+                  {{ 'sections.collection.previous' | t }}
                 </a>
               {% endif %}
 
               <div class="collection-grid__page-numbers">
                 {% for part in paginate.parts %}
                   {% if part.is_link %}
-                    <a href="{{ part.url }}" class="collection-grid__page-num label-sm">
+                    <a href="{{ part.url }}" class="collection-grid__page-num text-label">
                       {% if part.title < 10 %}0{% endif %}{{ part.title }}
                     </a>
                   {% else %}
                     {% if part.title == '&hellip;' %}
-                      <span class="collection-grid__page-num label-sm">{{ part.title }}</span>
+                      <span class="collection-grid__page-num text-label">{{ part.title }}</span>
                     {% else %}
-                      <span class="collection-grid__page-num collection-grid__page-num--active label-sm" aria-current="page">
+                      <span class="collection-grid__page-num collection-grid__page-num--active text-label" aria-current="page">
                         {% if part.title < 10 %}0{% endif %}{{ part.title }}
                       </span>
                     {% endif %}
@@ -112,8 +145,8 @@
               </div>
 
               {% if paginate.next %}
-                <a href="{{ paginate.next.url }}" class="collection-grid__page-link label-sm" aria-label="{{ 'collection.next' | t }}">
-                  {{ 'collection.next' | t }}
+                <a href="{{ paginate.next.url }}" class="collection-grid__page-link text-label" aria-label="{{ 'sections.collection.next' | t }}">
+                  {{ 'sections.collection.next' | t }}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M5 12h14m-7-7 7 7-7 7"/>
                   </svg>
@@ -157,13 +190,8 @@
     border-bottom: 1px solid var(--color-primary);
     background: transparent;
     padding: 4px 0;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-on-background);
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: color var(--duration-normal) var(--easing-standard);
   }
 
   .collection-grid__sort-btn:hover {
@@ -171,7 +199,7 @@
   }
 
   .collection-grid__sort-icon {
-    transition: transform 0.3s ease;
+    transition: transform var(--duration-normal) var(--easing-standard);
   }
 
   .collection-grid__sort-btn[aria-expanded="true"] .collection-grid__sort-icon {
@@ -201,12 +229,13 @@
     padding: 8px 20px;
     color: var(--color-on-surface-variant);
     text-decoration: none;
-    transition: color 0.2s ease, background 0.2s ease;
+    transition: color var(--duration-fast) var(--easing-standard),
+                background var(--duration-fast) var(--easing-standard);
   }
 
   .collection-grid__sort-option:hover {
     color: var(--color-primary);
-    background: var(--color-surface);
+    background: var(--color-surface-container-low);
   }
 
   [aria-selected="true"] .collection-grid__sort-option {
@@ -217,7 +246,7 @@
   .collection-grid__layout {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--gutter);
+    gap: var(--space-gutter);
   }
 
   @media (min-width: 768px) {
@@ -257,7 +286,6 @@
     cursor: pointer;
     margin-bottom: 24px;
     letter-spacing: 0.15em;
-    text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -276,7 +304,7 @@
     gap: 12px;
     cursor: pointer;
     color: var(--color-on-surface-variant);
-    transition: color 0.3s ease;
+    transition: color var(--duration-normal) var(--easing-standard);
   }
 
   .collection-grid__filter-option:hover {
@@ -312,7 +340,7 @@
   .collection-grid__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 64px var(--gutter);
+    gap: 64px var(--space-gutter);
   }
 
   @media (min-width: 640px) {
@@ -333,7 +361,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 32px;
   }
 
   .collection-grid__page-link {
@@ -342,7 +370,7 @@
     gap: 8px;
     color: var(--color-outline);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--duration-normal) var(--easing-standard);
   }
 
   .collection-grid__page-link:hover {
@@ -357,7 +385,7 @@
   .collection-grid__page-num {
     color: var(--color-outline);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--duration-normal) var(--easing-standard);
     padding: 4px 2px;
   }
 
@@ -373,12 +401,12 @@
 
 <script>
   (function() {
-    const sortBtn = document.querySelector('.collection-grid__sort-btn');
-    const sortDropdown = document.querySelector('.collection-grid__sort-dropdown');
+    var sortBtn = document.querySelector('.collection-grid__sort-btn');
+    var sortDropdown = document.querySelector('.collection-grid__sort-dropdown');
 
     if (sortBtn && sortDropdown) {
       sortBtn.addEventListener('click', function() {
-        const expanded = this.getAttribute('aria-expanded') === 'true';
+        var expanded = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', String(!expanded));
         sortDropdown.classList.toggle('collection-grid__sort-dropdown--open');
       });
@@ -395,7 +423,7 @@
 
 {% schema %}
 {
-  "name": "t:sections.collection_grid.name",
+  "name": "Collection Grid",
   "tag": "section",
   "class": "collection-grid-section",
   "settings": [
@@ -405,25 +433,21 @@
       "min": 6,
       "max": 24,
       "step": 3,
-      "label": "t:sections.collection_grid.products_per_page",
-      "default": 12
+      "label": "Products per page",
+      "default": 9
     },
     {
       "type": "checkbox",
       "id": "show_filters",
-      "label": "t:sections.collection_grid.show_filters",
+      "label": "Show sidebar filters",
       "default": true
     },
     {
-      "type": "range",
-      "id": "grid_columns",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "label": "t:sections.collection_grid.grid_columns",
-      "default": 3
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sort dropdown",
+      "default": true
     }
-  ],
-  "templates": ["collection"]
+  ]
 }
 {% endschema %}

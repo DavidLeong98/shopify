@@ -5,7 +5,11 @@
         {% if section.settings.image != blank %}
           {{ section.settings.image | image_url: width: 800 | image_tag: class: 'consultation__image', loading: 'lazy' }}
         {% elsif section.settings.image_url != blank %}
-          <img src="{{ section.settings.image_url }}" alt="{{ section.settings.heading }}" class="consultation__image" loading="lazy">
+          <img src="{{ section.settings.image_url }}" alt="{{ section.settings.heading | escape }}" class="consultation__image" loading="lazy" width="800" height="1000">
+        {% else %}
+          <div class="consultation__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'consultation__placeholder-svg' }}
+          </div>
         {% endif %}
         <div class="consultation__circle" aria-hidden="true"></div>
         {% if section.settings.stat_number != blank %}
@@ -21,26 +25,28 @@
         {% endif %}
         <h2 class="consultation__heading text-display">{{ section.settings.heading }}</h2>
         <p class="consultation__description text-body-large">{{ section.settings.description }}</p>
-        <div class="consultation__features">
-          {% for block in section.blocks %}
-            <div class="consultation__feature" {{ block.shopify_attributes }}>
-              {% if block.settings.icon == 'auto_awesome' %}
-                <svg class="consultation__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>
-                </svg>
-              {% else %}
-                <svg class="consultation__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-              {% endif %}
-              <div>
-                <h4 class="consultation__feature-title text-label">{{ block.settings.title }}</h4>
-                <p class="consultation__feature-desc">{{ block.settings.description }}</p>
+        {% if section.blocks.size > 0 %}
+          <div class="consultation__features">
+            {% for block in section.blocks %}
+              <div class="consultation__feature" {{ block.shopify_attributes }}>
+                {% if block.settings.icon == 'auto_awesome' %}
+                  <svg class="consultation__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>
+                  </svg>
+                {% else %}
+                  <svg class="consultation__feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                {% endif %}
+                <div>
+                  <h4 class="consultation__feature-title text-label">{{ block.settings.title }}</h4>
+                  <p class="consultation__feature-desc text-body">{{ block.settings.description }}</p>
+                </div>
               </div>
-            </div>
-          {% endfor %}
-        </div>
+            {% endfor %}
+          </div>
+        {% endif %}
         {% if section.settings.button_label != blank %}
           <a href="{{ section.settings.button_link }}" class="btn btn--primary consultation__cta">
             {{ section.settings.button_label }}
@@ -72,6 +78,21 @@
     object-fit: cover;
     position: relative;
     z-index: 1;
+  }
+  .consultation__placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background-color: var(--color-surface-container-low);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .consultation__placeholder-svg {
+    width: 60%;
+    height: 60%;
+    fill: var(--color-outline-variant);
   }
   .consultation__circle {
     position: absolute;
@@ -166,7 +187,7 @@
     {
       "type": "url",
       "id": "image_url",
-      "label": "Fallback image URL"
+      "label": "t:sections.consultation.image"
     },
     {
       "type": "text",

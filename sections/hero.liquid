@@ -3,7 +3,11 @@
     {% if section.settings.image != blank %}
       {{ section.settings.image | image_url: width: 1920 | image_tag: class: 'hero__image', loading: 'eager' }}
     {% elsif section.settings.image_url != blank %}
-      <img src="{{ section.settings.image_url }}" alt="{{ section.settings.heading }}" class="hero__image" loading="eager">
+      <img src="{{ section.settings.image_url }}" alt="{{ section.settings.heading | escape }}" class="hero__image" loading="eager" width="1920" height="1080">
+    {% else %}
+      <div class="hero__placeholder">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder-svg' }}
+      </div>
     {% endif %}
   </div>
   <div class="hero__content" data-hero-parallax>
@@ -48,6 +52,19 @@
     object-fit: cover;
     opacity: 0.9;
   }
+  .hero__placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-surface-container-low);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero__placeholder-svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--color-outline-variant);
+  }
   .hero__content {
     position: relative;
     z-index: 1;
@@ -65,7 +82,6 @@
     text-transform: uppercase;
   }
   .hero__heading {
-    color: var(--color-on-background);
     margin-bottom: 32px;
     font-size: clamp(32px, 6vw, 64px);
   }
@@ -128,7 +144,7 @@
     {
       "type": "url",
       "id": "image_url",
-      "label": "Fallback image URL"
+      "label": "t:sections.hero.image"
     },
     {
       "type": "text",

@@ -3,33 +3,56 @@
     <div class="product-detail__grid">
       {%- comment -%} Image Gallery — 7 columns {%- endcomment -%}
       <div class="product-detail__gallery">
-        {% for image in product.images limit: 3 %}
-          <div class="product-detail__image-wrap {% if forloop.first %}product-detail__image-wrap--hero{% endif %}">
-            {% if forloop.first %}
-              {{ image | image_url: width: 1200 | image_tag: class: 'product-detail__image', loading: 'eager' }}
-            {% else %}
-              {{ image | image_url: width: 800 | image_tag: class: 'product-detail__image', loading: 'lazy' }}
-            {% endif %}
+        {% if product.images.size > 0 %}
+          {% for image in product.images limit: 3 %}
+            <div class="product-detail__image-wrap {% if forloop.first %}product-detail__image-wrap--hero{% endif %}">
+              {% if forloop.first %}
+                {{ image | image_url: width: 1200 | image_tag: class: 'product-detail__image', loading: 'eager', alt: product.title }}
+              {% else %}
+                {{ image | image_url: width: 800 | image_tag: class: 'product-detail__image', loading: 'lazy', alt: product.title }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="product-detail__image-wrap product-detail__image-wrap--hero">
+            <svg class="pdp__placeholder" viewBox="0 0 480 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="480" height="600" fill="var(--color-surface-container-low)"/>
+              <path d="M215 270 a25 25 0 1 1 50 0 a25 25 0 1 1 -50 0 M190 330 l40-30 30 20 40-50 40 60 v20 H190Z" fill="var(--color-outline-variant)" opacity="0.5"/>
+            </svg>
           </div>
-        {% endfor %}
+          <div class="product-detail__image-wrap">
+            <svg class="pdp__placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="400" height="400" fill="var(--color-surface-container-low)"/>
+              <circle cx="200" cy="180" r="20" fill="var(--color-outline-variant)" opacity="0.5"/>
+              <path d="M150 240 l30-20 20 15 30-40 30 45 v15 H150Z" fill="var(--color-outline-variant)" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="product-detail__image-wrap">
+            <svg class="pdp__placeholder" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="400" height="400" fill="var(--color-surface-container-low)"/>
+              <circle cx="200" cy="180" r="20" fill="var(--color-outline-variant)" opacity="0.5"/>
+              <path d="M150 240 l30-20 20 15 30-40 30 45 v15 H150Z" fill="var(--color-outline-variant)" opacity="0.5"/>
+            </svg>
+          </div>
+        {% endif %}
       </div>
 
       {%- comment -%} Product Details — 5 columns, sticky {%- endcomment -%}
       <div class="product-detail__details">
         <div class="product-detail__meta">
           {% if product.type != blank %}
-            <span class="label-sm" style="color: var(--color-on-surface-variant);">{{ product.type }}</span>
+            <span class="text-label" style="color: var(--color-tertiary);">{{ product.type }}</span>
           {% endif %}
           {% if product.metafields.reviews.rating.value != blank %}
             <div class="product-detail__rating">
               {% assign rating = product.metafields.reviews.rating.value.rating | round: 1 %}
               {% for i in (1..5) %}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="{% if i <= rating %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="1.5" style="color: var(--color-on-surface-variant);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="{% if i <= rating %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="1.5" style="color: var(--color-tertiary);">
                   <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>
                 </svg>
               {% endfor %}
               {% if product.metafields.reviews.rating_count.value != blank %}
-                <span class="label-sm" style="color: var(--color-on-surface-variant); margin-left: 4px;">
+                <span class="text-label" style="color: var(--color-on-surface-variant); margin-left: 4px;">
                   ({{ product.metafields.reviews.rating_count.value }})
                 </span>
               {% endif %}
@@ -37,10 +60,10 @@
           {% endif %}
         </div>
 
-        <h1 class="display-lg" style="margin-bottom: 16px;">{{ product.title }}</h1>
+        <h1 class="text-display" style="margin-bottom: 16px;">{{ product.title }}</h1>
 
         {% if product.description != blank %}
-          <p class="body-lg" style="color: var(--color-on-surface-variant); max-width: 480px; margin-bottom: 24px;">
+          <p class="text-body-large" style="max-width: 480px; margin-bottom: 24px;">
             {{ product.description | strip_html | truncate: 200 }}
           </p>
         {% endif %}
@@ -62,9 +85,9 @@
             <div class="product-detail__variants">
               {% for option in product.options_with_values %}
                 <div class="product-detail__option">
-                  <label class="label-sm" for="product-detail-option-{{ option.name | handleize }}">{{ option.name }}</label>
+                  <label class="text-label" for="product-option-{{ option.name | handleize }}">{{ option.name }}</label>
                   <select
-                    id="product-detail-option-{{ option.name | handleize }}"
+                    id="product-option-{{ option.name | handleize }}"
                     class="product-detail__option-select"
                     name="options[{{ option.name }}]"
                   >
@@ -81,26 +104,26 @@
 
           <div class="product-detail__add-section">
             <div class="product-detail__quantity">
-              <span class="label-sm" style="color: var(--color-on-surface-variant);">{{ 'products.quantity' | t }}</span>
+              <span class="text-label" style="color: var(--color-on-surface-variant);">{{ 'sections.product_detail.quantity' | t }}</span>
               <div class="product-detail__quantity-controls">
                 <button
                   type="button"
                   class="product-detail__qty-btn"
-                  aria-label="{{ 'products.decrease' | t }}"
+                  aria-label="{{ 'sections.product_detail.decrease_quantity' | t }}"
                   data-action="decrease"
-                >-</button>
+                >&minus;</button>
                 <input
                   type="number"
                   name="quantity"
                   value="1"
                   min="1"
                   class="product-detail__qty-input"
-                  aria-label="{{ 'products.quantity' | t }}"
+                  aria-label="{{ 'sections.product_detail.quantity' | t }}"
                 >
                 <button
                   type="button"
                   class="product-detail__qty-btn"
-                  aria-label="{{ 'products.increase' | t }}"
+                  aria-label="{{ 'sections.product_detail.increase_quantity' | t }}"
                   data-action="increase"
                 >+</button>
               </div>
@@ -108,122 +131,118 @@
 
             <button
               type="submit"
-              class="btn-primary product-detail__add-btn"
+              class="btn btn--primary product-detail__add-btn"
               {% unless current_variant.available %}disabled{% endunless %}
             >
               {% if current_variant.available %}
-                {{ 'products.add_to_bag' | t }}
+                {{ 'sections.product_detail.add_to_bag' | t }}
               {% else %}
-                {{ 'products.sold_out' | t }}
+                {{ 'sections.product_detail.sold_out' | t }}
               {% endif %}
             </button>
 
-            <p class="product-detail__shipping-note label-sm">
-              {{ 'products.free_shipping' | t }}
+            <p class="product-detail__shipping-note text-label">
+              {{ 'sections.product_detail.free_shipping' | t }}
             </p>
           </div>
         {% endform %}
 
-        <div class="product-detail__chips">
-          {% for tag in product.tags limit: 5 %}
-            <span class="chip">{{ tag }}</span>
-          {% endfor %}
-        </div>
-
-        {%- comment -%} Accordion sections {%- endcomment -%}
-        {% for block in section.blocks %}
-          {% if block.type == 'accordion' %}
-            <details class="product-detail__accordion" {{ block.shopify_attributes }}>
-              <summary class="product-detail__accordion-summary label-sm">
-                {{ block.settings.heading }}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="m6 9 6 6 6-6"/>
-                </svg>
-              </summary>
-              <div class="product-detail__accordion-content body-md">
-                {{ block.settings.content }}
-              </div>
-            </details>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-
-    {%- comment -%} Reviews Section {%- endcomment -%}
-    {% if product.metafields.reviews.rating.value != blank %}
-      <div class="product-detail__reviews section-gap">
-        <h2 class="headline-lg" style="margin-bottom: 32px;">{{ 'products.reviews_title' | t | default: 'Reviews' }}</h2>
-        <div class="product-detail__reviews-summary">
-          <div class="product-detail__reviews-score">
-            <span class="display-lg">{{ product.metafields.reviews.rating.value.rating | round: 1 }}</span>
-            <div>
-              <div class="product-detail__rating">
-                {% assign rating = product.metafields.reviews.rating.value.rating | round: 1 %}
-                {% for i in (1..5) %}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="{% if i <= rating %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="1.5" style="color: var(--color-primary);">
-                    <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>
-                  </svg>
-                {% endfor %}
-              </div>
-              {% if product.metafields.reviews.rating_count.value != blank %}
-                <span class="body-md" style="color: var(--color-on-surface-variant);">
-                  {{ product.metafields.reviews.rating_count.value }} {{ 'products.reviews_count' | t | default: 'reviews' }}
-                </span>
-              {% endif %}
-            </div>
+        {%- comment -%} Tag chips {%- endcomment -%}
+        {% if product.tags.size > 0 %}
+          <div class="product-detail__chips">
+            {% for tag in product.tags limit: 5 %}
+              <span class="product-detail__chip text-label">{{ tag }}</span>
+            {% endfor %}
           </div>
-        </div>
-      </div>
-    {% endif %}
+        {% endif %}
 
-    {%- comment -%} Complete Your Ritual — Related Products {%- endcomment -%}
-    {% assign related_collection = product.collections.first %}
-    {% if related_collection != blank %}
-      <div class="product-detail__related section-gap">
-        <div class="product-detail__related-header">
-          <h2 class="display-md">{{ 'products.complete_ritual' | t | default: 'Complete Your Ritual' }}</h2>
-        </div>
-        <div class="product-detail__related-grid">
-          {% for related_product in related_collection.products limit: 4 %}
-            {% if related_product.id != product.id %}
-              {% render 'product-card', product: related_product, show_quick_add: true %}
+        {%- comment -%} Accordion sections from blocks {%- endcomment -%}
+        <div class="product-detail__accordions">
+          {% for block in section.blocks %}
+            {% if block.type == 'accordion' %}
+              <details class="product-detail__accordion" {{ block.shopify_attributes }}>
+                <summary class="product-detail__accordion-summary text-label">
+                  {{ block.settings.heading }}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </summary>
+                <div class="product-detail__accordion-content text-body">
+                  {{ block.settings.content }}
+                </div>
+              </details>
             {% endif %}
           {% endfor %}
         </div>
       </div>
-    {% endif %}
+    </div>
   </div>
 </section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const quantityControls = document.querySelectorAll('.product-detail__quantity-controls');
+    var quantityControls = document.querySelectorAll('.product-detail__quantity-controls');
 
     quantityControls.forEach(function (control) {
-      const input = control.querySelector('.product-detail__qty-input');
-      const decreaseBtn = control.querySelector('[data-action="decrease"]');
-      const increaseBtn = control.querySelector('[data-action="increase"]');
+      var input = control.querySelector('.product-detail__qty-input');
+      var decreaseBtn = control.querySelector('[data-action="decrease"]');
+      var increaseBtn = control.querySelector('[data-action="increase"]');
 
       decreaseBtn.addEventListener('click', function () {
-        const currentValue = parseInt(input.value, 10);
+        var currentValue = parseInt(input.value, 10);
         if (currentValue > 1) {
           input.value = currentValue - 1;
         }
       });
 
       increaseBtn.addEventListener('click', function () {
-        const currentValue = parseInt(input.value, 10);
+        var currentValue = parseInt(input.value, 10);
         input.value = currentValue + 1;
       });
     });
+
+    /* Variant selector: update hidden id input when options change */
+    var variantSelects = document.querySelectorAll('.product-detail__option-select');
+    var hiddenIdInput = document.querySelector('.product-detail__form input[name="id"]');
+
+    if (variantSelects.length > 0 && window.__productVariantsJSON) {
+      variantSelects.forEach(function(select) {
+        select.addEventListener('change', function() {
+          var selectedOptions = [];
+          variantSelects.forEach(function(s) {
+            selectedOptions.push(s.value);
+          });
+          var variants = window.__productVariantsJSON;
+          for (var i = 0; i < variants.length; i++) {
+            var match = true;
+            for (var j = 0; j < selectedOptions.length; j++) {
+              if (variants[i].options[j] !== selectedOptions[j]) {
+                match = false;
+                break;
+              }
+            }
+            if (match) {
+              hiddenIdInput.value = variants[i].id;
+              break;
+            }
+          }
+        });
+      });
+    }
   });
 </script>
+
+{% if product.variants.size > 1 %}
+  <script>
+    window.__productVariantsJSON = {{ product.variants | json }};
+  </script>
+{% endif %}
 
 {% stylesheet %}
   .product-detail__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--gutter);
+    gap: var(--space-gutter);
     align-items: start;
   }
 
@@ -246,14 +265,16 @@
 
   .product-detail__image-wrap {
     overflow: hidden;
-    background-color: var(--color-surface);
+    background-color: var(--color-surface-container-low);
   }
 
-  .product-detail__image-wrap--hero .product-detail__image {
+  .product-detail__image-wrap--hero .product-detail__image,
+  .product-detail__image-wrap--hero .pdp__placeholder {
     aspect-ratio: 4/5;
   }
 
-  .product-detail__image-wrap:not(.product-detail__image-wrap--hero) .product-detail__image {
+  .product-detail__image-wrap:not(.product-detail__image-wrap--hero) .product-detail__image,
+  .product-detail__image-wrap:not(.product-detail__image-wrap--hero) .pdp__placeholder {
     aspect-ratio: 1/1;
   }
 
@@ -261,7 +282,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 0.6s ease;
+    transition: opacity var(--duration-slow) var(--easing-decelerate);
   }
 
   .product-detail__image-wrap:hover .product-detail__image {
@@ -309,7 +330,7 @@
 
   /* Form */
   .product-detail__form {
-    border-top: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
+    border-top: 1px solid var(--color-outline-variant);
     padding-top: 24px;
   }
 
@@ -357,12 +378,12 @@
 
   .product-detail__qty-btn {
     font-size: 18px;
-    color: var(--color-on-background);
+    color: var(--color-on-surface);
     background: none;
     border: none;
     cursor: pointer;
     padding: 4px 8px;
-    transition: color 0.3s ease;
+    transition: color var(--duration-normal) var(--easing-standard);
   }
 
   .product-detail__qty-btn:hover {
@@ -387,8 +408,6 @@
   .product-detail__add-btn {
     width: 100%;
     padding: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 
   .product-detail__add-btn:disabled {
@@ -411,9 +430,21 @@
     margin-bottom: 24px;
   }
 
+  .product-detail__chip {
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+    padding: 4px 12px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
   /* Accordions */
+  .product-detail__accordions {
+    border-top: 1px solid var(--color-outline-variant);
+  }
+
   .product-detail__accordion {
-    border-bottom: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
+    border-bottom: 1px solid var(--color-outline-variant);
   }
 
   .product-detail__accordion-summary {
@@ -423,11 +454,15 @@
     padding: 24px 0;
     cursor: pointer;
     list-style: none;
-    color: var(--color-on-background);
+    color: var(--color-on-surface);
   }
 
   .product-detail__accordion-summary::-webkit-details-marker {
     display: none;
+  }
+
+  .product-detail__accordion-summary svg {
+    transition: transform var(--duration-normal) var(--easing-standard);
   }
 
   .product-detail__accordion[open] .product-detail__accordion-summary svg {
@@ -439,79 +474,49 @@
     color: var(--color-on-surface-variant);
     line-height: 1.7;
   }
-
-  /* Reviews */
-  .product-detail__reviews-summary {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .product-detail__reviews-score {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  /* Related Products */
-  .product-detail__related-header {
-    margin-bottom: 48px;
-  }
-
-  .product-detail__related-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--gutter);
-  }
-
-  @media (min-width: 768px) {
-    .product-detail__related-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:sections.product_detail.name",
+  "name": "Product Detail",
   "tag": "section",
   "class": "main-product",
   "settings": [
     {
       "type": "checkbox",
       "id": "show_reviews",
-      "label": "t:sections.product_detail.show_reviews",
+      "label": "Show reviews section",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_related",
-      "label": "t:sections.product_detail.show_related",
+      "label": "Show related products",
       "default": true
     }
   ],
   "blocks": [
     {
       "type": "accordion",
-      "name": "t:sections.product_detail.accordion",
+      "name": "Accordion",
       "settings": [
         {
           "type": "text",
           "id": "heading",
-          "label": "t:sections.product_detail.accordion_heading",
+          "label": "Heading",
           "default": "Ingredients"
         },
         {
           "type": "richtext",
           "id": "content",
-          "label": "t:sections.product_detail.accordion_content"
+          "label": "Content"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "t:sections.product_detail.name",
+      "name": "Product Detail",
       "blocks": [
         {
           "type": "accordion",
@@ -522,7 +527,7 @@
         {
           "type": "accordion",
           "settings": {
-            "heading": "How to Use"
+            "heading": "Usage Instructions"
           }
         }
       ]
