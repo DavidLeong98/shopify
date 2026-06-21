@@ -28,6 +28,7 @@
     "related-products": {
       "type": "best-sellers",
       "settings": {
+        "collection": "all-products",
         "eyebrow": "Pairs Well With",
         "heading": "Complete Your Ritual",
         "products_to_show": 4,
