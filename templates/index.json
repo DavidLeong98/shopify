@@ -3,6 +3,7 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "image_url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBoyf0tnMZLmO1VAF5mc0zNCReyoF-VDzK3LBD4FmwZr80lreyud0yqzjvFz92cUcsPC0iqjks1r3IcZ8QVnjTAkGISM_rY_zuTFQX7XSfQOtNQ9HBQ6Baq2J2gGMmNMv-C5oIphbS1Q17KD5_Rpv_7GofgVhLj8U5DAnLBwr2V0_vR6XS37E6PJGP_k3Z8WiOp6jl3VLJAwmzKfwGKH-82f6AzLMGZRNr73iihQIw9qm9OHR8haF9vubpJxGc3cCJSuUus6Nq2hk0",
         "eyebrow": "The Essence of Calm",
         "heading": "Radiance Awaits",
         "subheading": "Discover a sensory journey of clinical precision and botanical grace. Our rituals are designed to illuminate your natural beauty through the philosophy of restraint.",
@@ -49,6 +50,7 @@
     "consultation": {
       "type": "consultation",
       "settings": {
+        "image_url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDvNiUkTDLKbdyqH9RWIjtB3xejdbx7sQiFJwbtgY3NtBXzEdJx2v5IZfZB9ZIeo5tc8lv-6qG5EYgUE6_tO7gNUai9HSdZSkjNpLcThooxHuuAw1f7Onm-ztQ94iGxi5avkem3MexZalbLQFExOHCXvZjf6iYwRbqiRZTFodpKYRfgzBO0RxUX6xaapEnMrsuSlP88RND6wLZOpk88OgMFglc1PYqTeDHemwmFtkUvkib3QPFNwlKY7Ge2BnqUilwH3bWB2G6oOls",
         "stat_number": "8+",
         "stat_label": "Years of Research",
         "eyebrow": "Personalized Guidance",

@@ -17,6 +17,8 @@
           <div class="product-card__image-wrap">
             {% if product.featured_image != blank %}
               {{ product.featured_image | image_url: width: 600, height: 800 | image_tag: class: 'product-card__image', loading: 'lazy' }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'product-card__image product-card__placeholder' }}
             {% endif %}
             {% if product.metafields.custom.badge != blank %}
               <span class="product-card__badge text-label">{{ product.metafields.custom.badge }}</span>

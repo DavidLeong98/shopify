@@ -1,9 +1,11 @@
 <section class="hero">
-  {% if section.settings.image != blank %}
-    <div class="hero__media">
+  <div class="hero__media">
+    {% if section.settings.image != blank %}
       {{ section.settings.image | image_url: width: 1920 | image_tag: class: 'hero__image', loading: 'eager' }}
-    </div>
-  {% endif %}
+    {% elsif section.settings.image_url != blank %}
+      <img src="{{ section.settings.image_url }}" alt="{{ section.settings.heading }}" class="hero__image" loading="eager">
+    {% endif %}
+  </div>
   <div class="hero__content" data-hero-parallax>
     {% if section.settings.eyebrow != blank %}
       <span class="hero__eyebrow text-label">{{ section.settings.eyebrow }}</span>
@@ -122,6 +124,11 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.hero.image"
+    },
+    {
+      "type": "url",
+      "id": "image_url",
+      "label": "Fallback image URL"
     },
     {
       "type": "text",

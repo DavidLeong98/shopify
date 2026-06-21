@@ -4,6 +4,8 @@
       <div class="consultation__media">
         {% if section.settings.image != blank %}
           {{ section.settings.image | image_url: width: 800 | image_tag: class: 'consultation__image', loading: 'lazy' }}
+        {% elsif section.settings.image_url != blank %}
+          <img src="{{ section.settings.image_url }}" alt="{{ section.settings.heading }}" class="consultation__image" loading="lazy">
         {% endif %}
         <div class="consultation__circle" aria-hidden="true"></div>
         {% if section.settings.stat_number != blank %}
@@ -160,6 +162,11 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.consultation.image"
+    },
+    {
+      "type": "url",
+      "id": "image_url",
+      "label": "Fallback image URL"
     },
     {
       "type": "text",

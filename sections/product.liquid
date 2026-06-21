@@ -2,15 +2,21 @@
   <div class="pdp__inner container">
     <div class="pdp__grid">
       <div class="pdp__gallery">
-        {% for image in product.images limit: 3 %}
-          <div class="pdp__image-wrap {% if forloop.first %}pdp__image-wrap--hero{% endif %}">
-            {% if forloop.first %}
-              {{ image | image_url: width: 900 | image_tag: class: 'pdp__image', loading: 'eager' }}
-            {% else %}
-              {{ image | image_url: width: 900 | image_tag: class: 'pdp__image', loading: 'lazy' }}
-            {% endif %}
+        {% if product.images.size > 0 %}
+          {% for image in product.images limit: 3 %}
+            <div class="pdp__image-wrap {% if forloop.first %}pdp__image-wrap--hero{% endif %}">
+              {% if forloop.first %}
+                {{ image | image_url: width: 900 | image_tag: class: 'pdp__image', loading: 'eager' }}
+              {% else %}
+                {{ image | image_url: width: 900 | image_tag: class: 'pdp__image', loading: 'lazy' }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="pdp__image-wrap pdp__image-wrap--hero">
+            {{ 'product-1' | placeholder_svg_tag: 'pdp__image pdp__placeholder' }}
           </div>
-        {% endfor %}
+        {% endif %}
       </div>
 
       <div class="pdp__details">

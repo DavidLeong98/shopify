@@ -413,3 +413,12 @@ select {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* Placeholder images */
+.product-card__placeholder,
+.pdp__placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-surface-container-low);
+  fill: var(--color-outline-variant);
+}

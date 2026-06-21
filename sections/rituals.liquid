@@ -14,6 +14,8 @@
         <div class="ritual-card" {{ block.shopify_attributes }}>
           {% if block.settings.image != blank %}
             {{ block.settings.image | image_url: width: 800 | image_tag: class: 'ritual-card__image', loading: 'lazy' }}
+          {% elsif block.settings.image_url != blank %}
+            <img src="{{ block.settings.image_url }}" alt="{{ block.settings.heading }}" class="ritual-card__image" loading="lazy">
           {% endif %}
           <div class="ritual-card__overlay">
             <h3 class="text-headline ritual-card__overlay-title">{{ block.settings.heading }}</h3>
@@ -166,6 +168,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.rituals.image"
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Fallback image URL"
         },
         {
           "type": "text",
